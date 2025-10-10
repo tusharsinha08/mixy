@@ -24,4 +24,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+
+Route::get('/', function () {
+    return Inertia::render('Home'); // loads resources/js/Pages/Home.vue
+})->name('home');
+
+
 require __DIR__.'/auth.php';
