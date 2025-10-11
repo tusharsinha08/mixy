@@ -9,50 +9,6 @@
       <i class="icon-rt-arrow-up"></i>
     </button>
 
-    <!-- HEADER -->
-    <header class="border-b border-gray-200">
-      <!-- Topbar -->
-      <div class="bg-gray-100 text-sm py-2">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-4">
-          <p>Free shipping on orders over $25.</p>
-          <p class="mt-1 md:mt-0">
-            Need help? Call Us:
-            <a href="tel:888554168" class="text-green-600 font-medium hover:underline"
-              >+8 88 55 4168</a
-            >
-          </p>
-        </div>
-      </div>
-
-      <!-- Navbar -->
-      <div class="max-w-7xl mx-auto flex justify-between items-center py-4 px-4">
-        <a href="/" class="flex items-center gap-2">
-          <img src="/assets/images/logo/logo.png" alt="logo" class="h-10" />
-        </a>
-
-        <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
-          <a href="#" class="hover:text-green-600">Home</a>
-          <a href="#" class="hover:text-green-600">Shop</a>
-          <a href="#" class="hover:text-green-600">About</a>
-          <a href="#" class="hover:text-green-600">Contact</a>
-        </nav>
-
-        <div class="flex items-center gap-4">
-          <button><i class="icon-rt-search text-lg"></i></button>
-          <button><i class="icon-rt-user text-lg"></i></button>
-          <div class="relative">
-            <button>
-              <i class="icon-rt-bag2 text-lg"></i>
-              <span
-                class="absolute -top-2 -right-2 bg-green-600 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full"
-                >2</span
-              >
-            </button>
-          </div>
-        </div>
-      </div>
-    </header>
-
     <!-- HERO -->
     <section
       class="relative h-[500px] bg-cover bg-center flex items-center justify-center text-center"

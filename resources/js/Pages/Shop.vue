@@ -1,62 +1,18 @@
-<!-- src/pages/ShopPage.vue -->
 <template>
   <div class="min-h-screen bg-gray-50 py-10">
     <!-- Scroll to top -->
     <button
+      v-show="showScrollTop"
       id="scroll-top"
       @click="scrollToTop"
-      class="fixed bottom-5 right-5 p-3 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700"
+      class="fixed bottom-5 right-5 p-3 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 transition-colors z-50"
     >
       <i class="icon-rt-arrow-up"></i>
     </button>
-
-    <!-- HEADER -->
-    <header class="border-b border-gray-200">
-      <!-- Topbar -->
-      <div class="bg-gray-100 text-sm py-2">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-4">
-          <p>Free shipping on orders over $25.</p>
-          <p class="mt-1 md:mt-0">
-            Need help? Call Us:
-            <a href="tel:888554168" class="text-green-600 font-medium hover:underline"
-              >+8 88 55 4168</a
-            >
-          </p>
-        </div>
-      </div>
-
-      <!-- Navbar -->
-      <div class="max-w-7xl mx-auto flex justify-between items-center py-4 px-4">
-        <a href="/" class="flex items-center gap-2">
-          <img src="/assets/images/logo/logo.png" alt="logo" class="h-10" />
-        </a>
-
-        <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
-          <a href="#" class="hover:text-green-600">Home</a>
-          <a href="#" class="hover:text-green-600">Shop</a>
-          <a href="#" class="hover:text-green-600">About</a>
-          <a href="#" class="hover:text-green-600">Contact</a>
-        </nav>
-
-        <div class="flex items-center gap-4">
-          <button><i class="icon-rt-search text-lg"></i></button>
-          <button><i class="icon-rt-user text-lg"></i></button>
-          <div class="relative">
-            <button>
-              <i class="icon-rt-bag2 text-lg"></i>
-              <span
-                class="absolute -top-2 -right-2 bg-green-600 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full"
-                >2</span
-              >
-            </button>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <div class="container mx-auto px-4">
+    
+    <div class="max-w-7xl mx-auto px-4">
       <!-- Header -->
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 mt-6">
         <h1 class="text-2xl font-bold text-gray-800 mb-4 sm:mb-0">🛍️ Shop</h1>
 
         <!-- Search + Filter -->
@@ -65,17 +21,25 @@
             v-model="searchQuery"
             type="text"
             placeholder="Search products..."
-            class="border rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-500"
+            class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent w-full sm:w-64"
           />
 
           <select
             v-model="selectedCategory"
-            class="border rounded-xl px-4 py-2 text-gray-700 focus:ring-2 focus:ring-blue-500"
+            class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:ring-2 focus:ring-green-500 focus:border-transparent"
           >
             <option value="">All Categories</option>
             <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
           </select>
         </div>
+      </div>
+
+      <!-- Results count -->
+      <div class="mb-6 text-gray-600">
+        Showing {{ filteredProducts.length }} of {{ products.length }} products
+        <span v-if="searchQuery || selectedCategory">
+          (filtered)
+        </span>
       </div>
 
       <!-- Products Grid -->
@@ -89,16 +53,25 @@
       </div>
 
       <!-- Empty state -->
-      <div v-if="filteredProducts.length === 0" class="text-center text-gray-500 mt-10">
-        No products found 😕
+      <div v-if="filteredProducts.length === 0" class="text-center text-gray-500 mt-20 py-10">
+        <div class="text-6xl mb-4">😕</div>
+        <p class="text-xl font-medium mb-2">No products found</p>
+        <p class="text-gray-600 mb-4">Try adjusting your search or filter criteria</p>
+        <button 
+          @click="clearFilters"
+          class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
+        >
+          Clear Filters
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import ProductCard from '@/Components/ProductCard.vue'
+import Navbar from '@/Components/Navbar.vue'
 
 const products = ref([
   {
@@ -140,6 +113,7 @@ const products = ref([
 
 const searchQuery = ref('')
 const selectedCategory = ref('')
+const showScrollTop = ref(false)
 
 const categories = computed(() =>
   [...new Set(products.value.map(p => p.category))].sort()
@@ -154,6 +128,28 @@ const filteredProducts = computed(() => {
 })
 
 function handleAddToCart(product) {
+  // You can integrate with your cart store here
   alert(`Added "${product.name}" to cart!`)
 }
+
+function clearFilters() {
+  searchQuery.value = ''
+  selectedCategory.value = ''
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+function handleScroll() {
+  showScrollTop.value = window.scrollY > 300
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
