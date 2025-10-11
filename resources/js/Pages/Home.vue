@@ -23,89 +23,35 @@
           </p>
         </div>
       </div>
-  <!-- Top nav -->
-    <section class="w-full bg-white py-8 shadow-sm">
-       <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-6 gap-6">
-    
-    <!-- Logo -->
-       <a href="/" class="flex items-center gap-2">
-         <img src="/assets/images/logo.png" alt="Mixy Logo" class="h-10" />
-       </a>
 
-    <!-- Search Bar -->
-      <form class="flex-grow max-w-2xl w-full relative">
-        <input
-          type="text"
-          placeholder="Search product..."
-          class="w-full px-6 py-3 rounded-full bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-600 placeholder-gray-400"
-        />
-        <button
-          type="submit"
-          class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-green-600"
-         >
-         <i class="fas fa-search"></i>
-        </button>
-      </form>
+      <!-- Navbar -->
+      <div class="max-w-7xl mx-auto flex justify-between items-center py-4 px-4">
+        <a href="/" class="flex items-center gap-2">
+          <img src="/assets/images/logo/logo.png" alt="logo" class="h-10" />
+        </a>
 
-    <!-- Icons -->
-      <div class="flex items-center gap-4">
-        <button class="relative flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 text-gray-700 hover:text-green-600">
-          <i class="fas fa-user text-lg"></i>
-        </button>
-        <button class="relative flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 text-gray-700 hover:text-green-600">
-          <i class="fas fa-heart text-lg"></i>
-          <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">2</span>
-        </button>
-        <button class="relative flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 text-gray-700 hover:text-green-600">
-          <i class="fas fa-shopping-bag text-lg"></i>
-          <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">3</span>
-        </button>
+        <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
+          <a href="#" class="hover:text-green-600">Home</a>
+          <a href="#" class="hover:text-green-600">Shop</a>
+          <a href="#" class="hover:text-green-600">About</a>
+          <a href="#" class="hover:text-green-600">Contact</a>
+        </nav>
+
+        <div class="flex items-center gap-4">
+          <button><i class="icon-rt-search text-lg"></i></button>
+          <button><i class="icon-rt-user text-lg"></i></button>
+          <div class="relative">
+            <button>
+              <i class="icon-rt-bag2 text-lg"></i>
+              <span
+                class="absolute -top-2 -right-2 bg-green-600 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full"
+                >2</span
+              >
+            </button>
+          </div>
+        </div>
       </div>
-
-    </div>
-  </section>
-
-
-    <!-- Navbar -->
-   <section class="w-full bg-[#154E46] py-2">
-     <div class="max-w-7xl mx-auto flex items-center space-x-8 px-6">
-
-    <!-- Categories Button -->
-       <button
-         class="flex items-center gap-2 bg-[#179D56] text-white font-semibold px-10 py-2 rounded-full shadow-md hover:bg-[#138A4A] transition mr-4"
-       >
-        <i class="fas fa-bars text-lg "></i>
-        <span>Categories</span>
-        <i class="fas fa-chevron-down text-sm ml-1"></i>
-      </button>
-
-    <!-- Navigation Menu -->
-      <nav class="flex items-center space-x-10 text-white font-semibold">
-        <a href="#" class="flex items-center gap-1 hover:text-[#1ED760] transition">
-          Home Page
-          <i class="fas fa-chevron-down text-xs"></i>
-        </a>
-        <a href="#" class="flex items-center gap-1 hover:text-[#1ED760] transition">
-          Shop
-          <i class="fas fa-chevron-down text-xs"></i>
-        </a>
-        <a href="#" class="flex items-center gap-1 hover:text-[#1ED760] transition">
-          Product
-          <i class="fas fa-chevron-down text-xs"></i>
-        </a>
-        <a href="#" class="flex items-center gap-1 hover:text-[#1ED760] transition">
-          Pages
-         <i class="fas fa-chevron-down text-xs"></i>
-        </a>
-       <a href="#" class="flex items-center gap-1 hover:text-[#1ED760] transition">
-          Blog
-         <i class="fas fa-chevron-down text-xs"></i>
-        </a>
-      </nav>
-    </div>
-  </section>
-
- </header>
+    </header>
 
  
     <!-- Hero Section -->
