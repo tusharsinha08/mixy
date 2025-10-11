@@ -26,11 +26,11 @@
               Starting At
               <span class="text-red-600 font-bold text-3xl">$18.36</span>
             </p>
-            <a href="#"
-              class="inline-flex items-center gap-2 mt-8 bg-emerald-800 text-white font-semibold px-8 py-3 rounded-full hover:bg-emerald-900 transition-all duration-300">
-              Shop Now
-              <i class="fas fa-arrow-right text-sm"></i>
-            </a>
+            <Link href="/shop"
+              class="inline-flex items-center gap-2 mt-8 bg-emerald-800 text-white font-semibold px-8 py-3 rounded-full hover:bg-emerald-900 transition-all duration-300 cursor-pointer">
+            Shop Now
+            <i class="fas fa-arrow-right text-sm"></i>
+            </Link>
           </div>
         </div>
       </div>
@@ -378,6 +378,8 @@
 </template>
 
 <script>
+import { Link } from '@inertiajs/vue3';
+
 
 export default {
   name: "Home",
