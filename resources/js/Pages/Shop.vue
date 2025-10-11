@@ -71,7 +71,8 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import ProductCard from '@/Components/ProductCard.vue'
-import Navbar from '@/Components/Navbar.vue'
+import AppLayout from '@/Layouts/AppLayout.vue'
+
 
 const products = ref([
   {

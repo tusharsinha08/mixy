@@ -18,30 +18,45 @@
     </div>
 
     <!-- Navbar -->
-    <div class="max-w-7xl mx-auto flex justify-between items-center py-4 px-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center py-2 px-4 bg-emerald-800/90">
       <!-- Logo -->
       <Link href="/" class="flex items-center gap-2">
-        <img src="/assets/images/logo/logo.png" alt="logo" class="h-10" />
+        <img src="/assets/images/logo.png" alt="logo" class="h-10" />
       </Link>
 
       <!-- Desktop Nav -->
       <nav
-        class="hidden md:flex space-x-8 text-gray-700 font-medium"
+        class="hidden md:flex space-x-8 text-white font-medium"
       >
-        <Link href="/" class="hover:text-green-600">Home</Link>
-        <Link href="/shop" class="hover:text-green-600">Shop</Link>
-        <Link href="/about" class="hover:text-green-600">About</Link>
-        <Link href="/contact" class="hover:text-green-600">Contact</Link>
+        <Link href="/" class="hover:text-green-500">Home</Link>
+        <Link href="/shop" class="hover:text-green-500">Shop</Link>
+        <Link href="/about" class="hover:text-green-500">About</Link>
+        <Link href="/contact" class="hover:text-green-500">Contact</Link>
+        
+                            <Link
+                                :href="route('login')"
+                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                            >
+                                Log in
+                            </Link>
+
+                            <Link
+                                v-if="canRegister"
+                                :href="route('register')"
+                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                            >
+                                Register
+                            </Link>
       </nav>
 
       <!-- Right Side (Icons) -->
       <div class="flex items-center gap-4">
-        <button><i class="icon-rt-search text-lg"></i></button>
-        <button><i class="icon-rt-user text-lg"></i></button>
+        <button><i class="pi pi-search text-white text-lg"></i></button>
+        <button><i class="pi pi-user text-white text-lg"></i></button>
         <div class="relative">
           <button>
-            <i class="icon-rt-bag2 text-lg"></i>
-            <span
+            <i class="pi pi-shopping-cart text-lg text-white hover:text-green-500"></i>
+            <span @click="toggleCartDrawer"
               class="absolute -top-2 -right-2 bg-green-600 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full"
               >2</span
             >
@@ -50,7 +65,7 @@
 
         <!-- Mobile Menu Toggle -->
         <button class="md:hidden" @click="menuOpen = !menuOpen">
-          <i class="icon-rt-bars text-xl"></i>
+          <i class="pi pi-bars text-white"></i>
         </button>
 
       </div>
@@ -75,6 +90,7 @@
 
 <script>
 import { Link } from '@inertiajs/vue3'
+import 'primeicons/primeicons.css'
 
 export default {
   name: 'Navbar',
