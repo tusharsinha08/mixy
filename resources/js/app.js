@@ -1,26 +1,35 @@
 import './bootstrap';
 import '../css/app.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
+import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { createApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
+import AdminLayout from './Layouts/AdminLayout.vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
-    resolve: (name) =>
-        resolvePageComponent(
-            `./Pages/${name}.vue`,
-            import.meta.glob('./Pages/**/*.vue')
-        ),
+    resolve: (name) => {
+        const pages = import.meta.glob('./Pages/**/*.vue');
+        const page = resolvePageComponent(`./Pages/${name}.vue`, pages);
+
+        page.then((module) => {
+            if (name.startsWith('Admin/')) {
+                module.default.layout = module.default.layout || AdminLayout;
+            }
+        });
+
+        return page;
+    },
     setup({ el, App, props, plugin }) {
         const vueApp = createApp({ render: () => h(App, props) });
 
         vueApp.use(plugin);
-        vueApp.use(ZiggyVue);
+        vueApp.use(ZiggyVue); // ✅ Important
 
         vueApp.mount(el);
         return vueApp;
