@@ -8,8 +8,12 @@
 
     <div class="max-w-7xl mx-auto px-4">
       <!-- Header -->
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 mt-6">
-        <h1 class="text-2xl font-bold text-gray-800 mb-4 sm:mb-0">🛍️ Shop</h1>
+       <div>
+          <h1 class="text-2xl font-bold text-gray-800 mb-4 sm:mb-0">Shop</h1>
+          <p class=" mb-4 sm:mb-0">Home > Shop</p>
+        </div>
+      <div class="flex flex-col md:justify-end sm:flex-row sm:items-center sm:justify-between mb-8 mt-6">
+        
 
         <!-- Search + Filter -->
         <div class="flex flex-col sm:flex-row gap-3">
@@ -59,30 +63,35 @@ import ProductCard from '@/Components/ProductCard.vue'
 
 const products = ref([
   {
+    id: 1,
     name: "Fresh organic kiwi",
     priceRange: "$10.00 - $70.00",
     image: "/assets/images/products/product-image-2-1.jpg",
     category: "Fruits",
   },
   {
+    id: 2,
     name: "Dried mango",
     priceRange: "$10.00 - $70.00",
     image: "/assets/images/products/product-image-1-1.jpg",
     category: "Dried Fruits",
   },
   {
+    id: 3,
     name: "Dried banana",
     priceRange: "$60.00 - $80.00",
     image: "/assets/images/products/product-image-3-1.jpg",
     category: "Dried Fruits",
   },
   {
+    id: 4,
     name: "Crunchy crisps",
     priceRange: "$50.00 - $90.00",
     image: "/assets/images/products/product-image-4-1.jpg",
     category: "Snacks",
   },
   {
+    id: 5,
     name: "Jewel cranberries",
     priceRange: "$60.00 - $67.00",
     image: "/assets/images/products/product-image-5-1.jpg",
