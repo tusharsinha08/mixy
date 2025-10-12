@@ -1,6 +1,7 @@
 <template>
+
     <Head title="Contact Us" />
-    
+
     <div class="min-h-screen bg-gray-50">
         <!-- Header/Breadcrumb -->
         <div class="bg-white shadow">
@@ -10,8 +11,8 @@
                         <li>
                             <div>
                                 <Link href="/" class="text-gray-400 hover:text-gray-500">
-                                    <i class="fas fa-home"></i>
-                                    <span class="sr-only">Home</span>
+                                <i class="fas fa-home"></i>
+                                <span class="sr-only">Home</span>
                                 </Link>
                             </div>
                         </li>
@@ -34,7 +35,7 @@
                 <div class="p-8 bg-white rounded-lg shadow-md">
                     <h2 class="mb-6 text-2xl font-bold text-gray-900">Let us know how we can help</h2>
                     <p class="mb-8 text-gray-600">
-                        Please contact us using the options below. For fastest reply, please include your name, 
+                        Please contact us using the options below. For fastest reply, please include your name,
                         organization, appropriate contact information and a brief summary of your inquiry.
                     </p>
 
@@ -46,7 +47,8 @@
                             </div>
                             <div>
                                 <h3 class="mb-2 text-lg font-semibold text-gray-900">Office Location</h3>
-                                <p class="text-gray-600">Riverside Building, County Hall, London SE1 7PB, United Kingdom</p>
+                                <p class="text-gray-600">Riverside Building, County Hall, London SE1 7PB, United Kingdom
+                                </p>
                             </div>
                         </div>
 
@@ -72,8 +74,10 @@
                             <div>
                                 <h3 class="mb-2 text-lg font-semibold text-gray-900">Send Mail</h3>
                                 <p class="text-gray-600">
-                                    <a href="mailto:support@mixy.com" class="text-blue-600 hover:text-blue-800 hover:underline">support@mixy.com</a><br>
-                                    <a href="mailto:info@mixy.com" class="text-blue-600 hover:text-blue-800 hover:underline">info@mixy.com</a>
+                                    <a href="mailto:support@mixy.com"
+                                        class="text-blue-600 hover:text-blue-800 hover:underline">support@mixy.com</a><br>
+                                    <a href="mailto:info@mixy.com"
+                                        class="text-blue-600 hover:text-blue-800 hover:underline">info@mixy.com</a>
                                 </p>
                             </div>
                         </div>
@@ -83,60 +87,38 @@
                 <!-- Contact Form -->
                 <div class="p-8 bg-white rounded-lg shadow-md">
                     <h2 class="mb-6 text-2xl font-bold text-gray-900">Send Us a Message</h2>
-                    
+
                     <form @submit.prevent="submitForm" class="space-y-6">
                         <div>
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-700">Name *</label>
-                            <input 
-                                type="text" 
-                                id="name" 
-                                v-model="form.name"
-                                required
+                            <input type="text" id="name" v-model="form.name" required
                                 class="w-full px-4 py-3 transition duration-200 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                                placeholder="Your full name"
-                            >
+                                placeholder="Your full name">
                         </div>
 
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-700">Email *</label>
-                            <input 
-                                type="email" 
-                                id="email" 
-                                v-model="form.email"
-                                required
+                            <input type="email" id="email" v-model="form.email" required
                                 class="w-full px-4 py-3 transition duration-200 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                                placeholder="your.email@example.com"
-                            >
+                                placeholder="your.email@example.com">
                         </div>
 
                         <div>
                             <label for="phone" class="block mb-2 text-sm font-medium text-gray-700">Phone</label>
-                            <input 
-                                type="text" 
-                                id="phone" 
-                                v-model="form.phone"
+                            <input type="text" id="phone" v-model="form.phone"
                                 class="w-full px-4 py-3 transition duration-200 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                                placeholder="Your phone number"
-                            >
+                                placeholder="Your phone number">
                         </div>
 
                         <div>
                             <label for="message" class="block mb-2 text-sm font-medium text-gray-700">Message *</label>
-                            <textarea 
-                                id="message" 
-                                v-model="form.message"
-                                rows="5"
-                                required
+                            <textarea id="message" v-model="form.message" rows="5" required
                                 class="w-full px-4 py-3 transition duration-200 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                                placeholder="Tell us how we can help you..."
-                            ></textarea>
+                                placeholder="Tell us how we can help you..."></textarea>
                         </div>
 
-                        <button 
-                            type="submit" 
-                            :disabled="processing"
-                            class="w-full px-6 py-3 text-lg font-semibold text-white transition duration-200 bg-green-600 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
+                        <button type="submit" :disabled="processing"
+                            class="w-full px-6 py-3 text-lg font-semibold text-white transition duration-200 bg-green-600 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
                             <span v-if="processing">
                                 <i class="mr-2 fas fa-spinner fa-spin"></i>
                                 Sending...
@@ -158,7 +140,7 @@
             </div>
 
             <!-- Map Section -->
-            <div class="mt-16 overflow-hidden bg-white rounded-lg shadow-md">
+            <div class="my-16 overflow-hidden bg-white rounded-lg shadow-md">
                 <div class="relative flex items-center justify-center bg-gray-100 h-80">
                     <div class="z-10 text-center text-gray-500">
                         <i class="mb-4 text-5xl text-green-500 fas fa-map-marked-alt"></i>
@@ -167,36 +149,91 @@
                     </div>
                     <!-- Simple map placeholder with grid -->
                     <div class="absolute inset-0 opacity-20 bg-gradient-to-br from-green-400 to-blue-400"></div>
-                    <div class="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))]"></div>
+                    <div
+                        class="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))]">
+                    </div>
                 </div>
             </div>
+
+
+            <section class="bg-[#0D4C3A] py-10 text-white">
+                <div class="flex flex-col items-center justify-between gap-6 px-6 mx-auto max-w-7xl md:flex-row">
+                    <!-- Left: Text -->
+                    <div class="flex items-center gap-4">
+                        <div class="flex items-center justify-center rounded-full w-14 h-14 bg-white/10">
+                            <i class="text-2xl fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold">Sign up to Newsletter</h3>
+                            <p class="text-sm opacity-80">
+                                ...and receive $20 coupon for first shopping
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Center: Email Form -->
+                    <form
+                        class="flex items-center w-full md:w-[500px] bg-white rounded-full overflow-hidden border border-white/20 focus-within:ring-2 focus-within:ring-green-500 transition-all">
+                        <input type="email" placeholder="Your Email Address..."
+                            class="flex-1 px-5 py-3 text-gray-800 rounded-l-full outline-none" />
+                        <button type="submit"
+                            class="px-8 py-3 font-semibold text-white transition-all bg-green-600 rounded-r-full hover:bg-green-700 whitespace-nowrap">
+                            Subscribe
+                        </button>
+                    </form>
+
+
+                    <!-- Right: Call Us -->
+                    <div class="flex items-center gap-3 px-6 py-3 bg-green-700 rounded-full whitespace-nowrap">
+                        <i class="text-4xl fab fa-whatsapp"></i>
+                        <div>
+                            <p class="text-xs opacity-80">Call Us 24/7</p>
+                            <p class="text-lg font-semibold">+8 88 55 4168</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <!-- Features Section -->
-            <div class="grid grid-cols-1 gap-8 mt-16 md:grid-cols-3">
-                <div class="p-8 text-center transition duration-300 bg-white rounded-lg shadow-md hover:shadow-lg">
-                    <div class="inline-flex p-4 mb-4 bg-green-100 rounded-full">
-                        <i class="text-2xl text-green-600 fas fa-shipping-fast"></i>
+            <section class="py-10 mt-16 bg-white border-b rounded-lg">
+                <div class="grid grid-cols-1 gap-6 px-6 mx-auto max-w-7xl sm:grid-cols-2 md:grid-cols-4">
+                    <!-- Item 1 -->
+                    <div class="flex items-center space-x-4">
+                        <i class="text-3xl text-green-600 fas fa-truck"></i>
+                        <div>
+                            <h5 class="font-semibold text-gray-800">Free Shipping</h5>
+                            <p class="text-sm text-gray-500">Online Only. Exclusions Apply</p>
+                        </div>
                     </div>
-                    <h3 class="mb-3 text-xl font-bold text-gray-900">Free Shipping</h3>
-                    <p class="text-gray-600">Free shipping on orders over $25. Online only. Some exclusions apply.</p>
-                </div>
 
-                <div class="p-8 text-center transition duration-300 bg-white rounded-lg shadow-md hover:shadow-lg">
-                    <div class="inline-flex p-4 mb-4 bg-blue-100 rounded-full">
-                        <i class="text-2xl text-blue-600 fas fa-hand-holding-usd"></i>
+                    <!-- Item 2 -->
+                    <div class="flex items-center space-x-4">
+                        <i class="text-3xl text-blue-500 fas fa-money-bill-wave"></i>
+                        <div>
+                            <h5 class="font-semibold text-gray-800">Best Price Guarantee</h5>
+                            <p class="text-sm text-gray-500">If You Find a Lower Price</p>
+                        </div>
                     </div>
-                    <h3 class="mb-3 text-xl font-bold text-gray-900">Best Price Guarantee</h3>
-                    <p class="text-gray-600">Found a lower price? We'll match it to ensure you get the best deal available.</p>
-                </div>
 
-                <div class="p-8 text-center transition duration-300 bg-white rounded-lg shadow-md hover:shadow-lg">
-                    <div class="inline-flex p-4 mb-4 bg-purple-100 rounded-full">
-                        <i class="text-2xl text-purple-600 fas fa-headset"></i>
+                    <!-- Item 3 -->
+                    <div class="flex items-center space-x-4">
+                        <i class="text-3xl text-purple-500 fas fa-gift"></i>
+                        <div>
+                            <h5 class="font-semibold text-gray-800">Free Curbside Pickup</h5>
+                            <p class="text-sm text-gray-500">Grab Your Gear and Go</p>
+                        </div>
                     </div>
-                    <h3 class="mb-3 text-xl font-bold text-gray-900">Support 24/7</h3>
-                    <p class="text-gray-600">Our dedicated customer service team is available 24 hours a day, 7 days a week.</p>
+
+                    <!-- Item 4 -->
+                    <div class="flex items-center space-x-4">
+                        <i class="text-3xl text-yellow-500 fas fa-headset"></i>
+                        <div>
+                            <h5 class="font-semibold text-gray-800">Support 24/7</h5>
+                            <p class="text-sm text-gray-500">Contact us 24 hours a day</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
 </template>
@@ -217,21 +254,13 @@ const form = useForm({
 
 const submitForm = () => {
     processing.value = true;
-    
+
     // Simulate API call
     setTimeout(() => {
-        // In a real app, you would use:
-        // form.post('/contact', {
-        //     onSuccess: () => {
-        //         successMessage.value = 'Thank you for your message! We will get back to you soon.';
-        //         form.reset();
-        //     }
-        // });
-        
         successMessage.value = 'Thank you for your message! We will get back to you soon.';
         form.reset();
         processing.value = false;
-        
+
         // Clear success message after 5 seconds
         setTimeout(() => {
             successMessage.value = '';
