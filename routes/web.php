@@ -105,6 +105,14 @@ Route::get('/product-details/{id}', function ($id) {
 })->name('product-details');
 
 
+Route::get('/about-us', function () {
+    return Inertia::render('AboutUs');
+})->name('about-us');
+
+Route::get('/contact-us', function () {
+    return Inertia::render('ContactUs');
+})->name('contact-us');
+
 
 
 require __DIR__.'/auth.php';

@@ -59,8 +59,8 @@
         class="hidden md:flex justify-center space-x-8 py-3 text-white font-medium border-t bg-emerald-800 border-gray-100">
         <Link href="/" class="hover:text-green-600">Home</Link>
         <Link href="/shop" class="hover:text-green-600">Shop</Link>
-        <Link href="/about" class="hover:text-green-600">About</Link>
-        <Link href="/contact" class="hover:text-green-600">Contact</Link>
+        <Link href="/about-us" class="hover:text-green-600">About Us</Link>
+        <Link href="/contact-us" class="hover:text-green-600">Contact Us</Link>
       </nav>
     </div>
   </header>
