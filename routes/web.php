@@ -50,6 +50,13 @@ Route::get('/contactus', function () {
     return Inertia::render('ContactUs');
 })->name('contactus');
 
+Route::get('/error404', function () {
+    return Inertia::render('Error404');
+})->name('error404');
+
+// Route::get('/{any}', function () {
+//     return Inertia::render('Error404');
+// })->where('any', '.*');
 
 
 require __DIR__.'/auth.php';
