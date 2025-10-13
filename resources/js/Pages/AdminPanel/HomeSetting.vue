@@ -20,36 +20,37 @@
       </section>
 
       <!-- LOGO & HERO IMAGE -->
-     <section class="bg-white shadow rounded-xl p-6">
-  <h2 class="text-lg font-semibold mb-4">🖼️ Images</h2>
-  <div class="grid md:grid-cols-3 gap-4 items-center">
-    <div>
-      <label class="block text-sm font-medium mb-1">Logo</label>
-      <input type="file" @change="onFileChange($event, 'logo')" />
-      <img v-if="preview.logo || form.logo" :src="preview.logo || form.logo" class="h-16 mt-3 rounded" />
-    </div>
+      <section class="bg-white shadow rounded-xl p-6">
+        <h2 class="text-lg font-semibold mb-4">🖼️ Images</h2>
+        <div class="grid md:grid-cols-3 gap-4 items-center">
+          <div>
+            <label class="block text-sm font-medium mb-1">Logo</label>
+            <input type="file" @change="onFileChange($event, 'logo')" />
+            <img v-if="preview.logo || form.logo" :src="preview.logo || form.logo" class="h-16 mt-3 rounded" />
+          </div>
 
-    <div>
-      <label class="block text-sm font-medium mb-1">Hero Image</label>
-      <input type="file" @change="onFileChange($event, 'hero_image')" />
-      <img v-if="preview.hero_image || form.hero_image" :src="preview.hero_image || form.hero_image" class="h-24 mt-3 rounded" />
-    </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Hero Image</label>
+            <input type="file" @change="onFileChange($event, 'hero_image')" />
+            <img v-if="preview.hero_image || form.hero_image" :src="preview.hero_image || form.hero_image"
+              class="h-24 mt-3 rounded" />
+          </div>
 
-    <div>
-      <label class="block text-sm font-medium mb-1">Hero Price</label>
-      <input v-model="form.hero_price" type="text" class="input" />
+          <div>
+            <label class="block text-sm font-medium mb-1">Hero Price</label>
+            <input v-model="form.hero_price" type="text" class="input" />
 
-      <label class="block text-sm font-medium mt-3 mb-1">Hero Title</label>
-      <input v-model="form.hero_title" type="text" class="input" />
+            <label class="block text-sm font-medium mt-3 mb-1">Hero Title</label>
+            <input v-model="form.hero_title" type="text" class="input" />
 
-      <label class="block text-sm font-medium mt-3 mb-1">Hero Subtitle</label>
-      <input v-model="form.hero_subtitle" type="text" class="input" />
+            <label class="block text-sm font-medium mt-3 mb-1">Hero Subtitle</label>
+            <input v-model="form.hero_subtitle" type="text" class="input" />
 
-      <label class="block text-sm font-medium mt-3 mb-1">Hero Button Text</label>
-      <input v-model="form.hero_button_text" type="text" class="input" />
-    </div>
-  </div>
-</section>
+            <label class="block text-sm font-medium mt-3 mb-1">Hero Button Text</label>
+            <input v-model="form.hero_button_text" type="text" class="input" />
+          </div>
+        </div>
+      </section>
 
 
       <!-- NAV LINKS -->
@@ -80,192 +81,193 @@
       </section>
 
       <!-- OFFER BANNERS -->
-<section class="bg-white shadow rounded-xl p-6">
-  <div class="flex justify-between items-center mb-4">
-    <h2 class="text-lg font-semibold">🎁 Offer Banners</h2>
-    <button @click.prevent="addOfferBanner" class="btn-green">+ Add Banner</button>
-  </div>
-
-  <draggable v-model="form.offer_banners" handle=".drag-handle" item-key="id" class="space-y-3">
-    <template #item="{ element, index }">
-      <div class="relative border rounded p-3">
-        <button @click.prevent="removeOfferBanner(index)" class="absolute top-2 right-2 text-red-500">✕</button>
-
-        <div class="flex items-center gap-2 mb-2">
-          <span class="drag-handle cursor-move text-gray-400">☰</span>
-          <h3 class="font-medium text-gray-700">Banner {{ index + 1 }}</h3>
+      <section class="bg-white shadow rounded-xl p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-semibold">🎁 Offer Banners</h2>
+          <button @click.prevent="addOfferBanner" class="btn-green">+ Add Banner</button>
         </div>
 
-        <label class="text-xs text-gray-600">Title</label>
-        <input v-model="element.title" class="input" />
+        <draggable v-model="form.offer_banners" handle=".drag-handle" item-key="id" class="space-y-3">
+          <template #item="{ element, index }">
+            <div class="relative border rounded p-3">
+              <button @click.prevent="removeOfferBanner(index)" class="absolute top-2 right-2 text-red-500">✕</button>
 
-        <label class="text-xs text-gray-600 mt-2">Subtitle</label>
-        <input v-model="element.subtitle" class="input" />
+              <div class="flex items-center gap-2 mb-2">
+                <span class="drag-handle cursor-move text-gray-400">☰</span>
+                <h3 class="font-medium text-gray-700">Banner {{ index + 1 }}</h3>
+              </div>
 
-        <label class="text-xs text-gray-600 mt-2">Image URL</label>
-        <input v-model="element.image" class="input" placeholder="/assets/images/banner.webp" />
-      </div>
-    </template>
-  </draggable>
-</section>
+              <label class="text-xs text-gray-600">Title</label>
+              <input v-model="element.title" class="input" />
 
-<!-- BEST SELLERS -->
-<section class="bg-white shadow rounded-xl p-6">
-  <div class="flex justify-between items-center mb-4">
-    <h2 class="text-lg font-semibold">🔥 Best Sellers</h2>
-    <button @click.prevent="addBestSeller" class="btn-green">+ Add Product</button>
-  </div>
+              <label class="text-xs text-gray-600 mt-2">Subtitle</label>
+              <input v-model="element.subtitle" class="input" />
 
-  <draggable v-model="form.best_sellers" handle=".drag-handle" item-key="id" class="space-y-3">
-    <template #item="{ element, index }">
-      <div class="relative border rounded p-3">
-        <button @click.prevent="removeBestSeller(index)" class="absolute top-2 right-2 text-red-500">✕</button>
+              <label class="text-xs text-gray-600 mt-2">Image URL</label>
+              <input v-model="element.image" class="input" placeholder="/assets/images/banner.webp" />
+            </div>
+          </template>
+        </draggable>
+      </section>
 
-        <div class="flex items-center gap-2 mb-2">
-          <span class="drag-handle cursor-move text-gray-400">☰</span>
-          <h3 class="font-medium text-gray-700">Product {{ index + 1 }}</h3>
+      <!-- BEST SELLERS -->
+      <section class="bg-white shadow rounded-xl p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-semibold">🔥 Best Sellers</h2>
+          <button @click.prevent="addBestSeller" class="btn-green">+ Add Product</button>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-3">
-          <div>
-            <label class="text-xs text-gray-600">Name</label>
-            <input v-model="element.name" class="input" />
+        <draggable v-model="form.best_sellers" handle=".drag-handle" item-key="id" class="space-y-3">
+          <template #item="{ element, index }">
+            <div class="relative border rounded p-3">
+              <button @click.prevent="removeBestSeller(index)" class="absolute top-2 right-2 text-red-500">✕</button>
 
-            <label class="text-xs text-gray-600 mt-2">Price Range</label>
-            <input v-model="element.priceRange" class="input" />
+              <div class="flex items-center gap-2 mb-2">
+                <span class="drag-handle cursor-move text-gray-400">☰</span>
+                <h3 class="font-medium text-gray-700">Product {{ index + 1 }}</h3>
+              </div>
 
-            <label class="text-xs text-gray-600 mt-2">Rating (1–5)</label>
-            <input v-model.number="element.rating" type="number" min="1" max="5" class="input" />
+              <div class="grid md:grid-cols-2 gap-3">
+                <div>
+                  <label class="text-xs text-gray-600">Name</label>
+                  <input v-model="element.name" class="input" />
+
+                  <label class="text-xs text-gray-600 mt-2">Price Range</label>
+                  <input v-model="element.priceRange" class="input" />
+
+                  <label class="text-xs text-gray-600 mt-2">Rating (1–5)</label>
+                  <input v-model.number="element.rating" type="number" min="1" max="5" class="input" />
+                </div>
+
+                <div>
+                  <label class="text-xs text-gray-600">Image URL</label>
+                  <input v-model="element.image" class="input" placeholder="/uploads/bestsellers/honey.webp" />
+
+                  <label class="text-xs text-gray-600 mt-2">Button Icon</label>
+                  <input v-model="element.button_icon" class="input" placeholder="fas fa-shopping-bag" />
+                </div>
+              </div>
+            </div>
+          </template>
+        </draggable>
+      </section>
+
+      <!-- DEALS SECTION -->
+      <div class="mt-10">
+        <h2 class="text-2xl font-bold mb-4">🔥 Super Deals</h2>
+        <div v-for="(deal, index) in form.deals" :key="index" class="border rounded-lg p-4 mb-4 bg-gray-50">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="font-semibold text-sm">Title</label>
+              <input v-model="deal.title" type="text" class="w-full border rounded p-2" />
+            </div>
+            <div>
+              <label class="font-semibold text-sm">Price</label>
+              <input v-model="deal.price" type="text" class="w-full border rounded p-2" />
+            </div>
+            <div>
+              <label class="font-semibold text-sm">Sold</label>
+              <input v-model="deal.sold" type="number" class="w-full border rounded p-2" />
+            </div>
+            <div>
+              <label class="font-semibold text-sm">Available</label>
+              <input v-model="deal.available" type="number" class="w-full border rounded p-2" />
+            </div>
+            <div>
+              <label class="font-semibold text-sm">Progress (%)</label>
+              <input v-model="deal.progress" type="number" class="w-full border rounded p-2" />
+            </div>
+            <div>
+              <label class="font-semibold text-sm">Rating (1–5)</label>
+              <input v-model="deal.rating" type="number" class="w-full border rounded p-2" />
+            </div>
+            <div class="col-span-2">
+              <label class="font-semibold text-sm">Image URL</label>
+              <input v-model="deal.image" type="text" class="w-full border rounded p-2" />
+            </div>
           </div>
 
-          <div>
-            <label class="text-xs text-gray-600">Image URL</label>
-            <input v-model="element.image" class="input" placeholder="/uploads/bestsellers/honey.webp" />
-
-            <label class="text-xs text-gray-600 mt-2">Button Icon</label>
-            <input v-model="element.button_icon" class="input" placeholder="fas fa-shopping-bag" />
-          </div>
+          <button @click="removeDeal(index)" class="mt-3 bg-red-500 text-white px-4 py-1 rounded">Remove</button>
         </div>
+        <button @click="addDeal" class="bg-green-600 text-white px-4 py-2 rounded">+ Add Deal</button>
       </div>
-    </template>
-  </draggable>
-</section>
 
-<!-- DEALS SECTION -->
-<div class="mt-10">
-  <h2 class="text-2xl font-bold mb-4">🔥 Super Deals</h2>
-  <div v-for="(deal, index) in form.deals" :key="index" class="border rounded-lg p-4 mb-4 bg-gray-50">
-    <div class="grid grid-cols-2 gap-4">
-      <div>
-        <label class="font-semibold text-sm">Title</label>
-        <input v-model="deal.title" type="text" class="w-full border rounded p-2" />
-      </div>
-      <div>
-        <label class="font-semibold text-sm">Price</label>
-        <input v-model="deal.price" type="text" class="w-full border rounded p-2" />
-      </div>
-      <div>
-        <label class="font-semibold text-sm">Sold</label>
-        <input v-model="deal.sold" type="number" class="w-full border rounded p-2" />
-      </div>
-      <div>
-        <label class="font-semibold text-sm">Available</label>
-        <input v-model="deal.available" type="number" class="w-full border rounded p-2" />
-      </div>
-      <div>
-        <label class="font-semibold text-sm">Progress (%)</label>
-        <input v-model="deal.progress" type="number" class="w-full border rounded p-2" />
-      </div>
-      <div>
-        <label class="font-semibold text-sm">Rating (1–5)</label>
-        <input v-model="deal.rating" type="number" class="w-full border rounded p-2" />
-      </div>
-      <div class="col-span-2">
-        <label class="font-semibold text-sm">Image URL</label>
-        <input v-model="deal.image" type="text" class="w-full border rounded p-2" />
-      </div>
-    </div>
-
-    <button @click="removeDeal(index)" class="mt-3 bg-red-500 text-white px-4 py-1 rounded">Remove</button>
-  </div>
-  <button @click="addDeal" class="bg-green-600 text-white px-4 py-2 rounded">+ Add Deal</button>
-</div>
-
-<!-- CARDS SECTION -->
-<div class="mt-10">
-  <h2 class="text-2xl font-bold mb-4">🃏 3 Cards Section</h2>
-  <div v-for="(card, index) in form.cards" :key="index" class="border rounded-lg p-4 mb-4 bg-gray-50">
-    <div class="grid grid-cols-2 gap-4">
-      <div>
-        <label class="font-semibold text-sm">Title</label>
-        <input v-model="card.title" type="text" class="w-full border rounded p-2" />
-      </div>
-      <div>
-        <label class="font-semibold text-sm">Price</label>
-        <input v-model="card.price" type="text" class="w-full border rounded p-2" />
-      </div>
-      <div>
-        <label class="font-semibold text-sm">Image URL</label>
-        <input v-model="card.image" type="text" class="w-full border rounded p-2" />
-      </div>
-      <div>
-        <label class="font-semibold text-sm">Button Text</label>
-        <input v-model="card.button_text" type="text" class="w-full border rounded p-2" />
-      </div>
-      <div>
-        <label class="font-semibold text-sm">Button Icon</label>
-        <input v-model="card.button_icon" type="text" class="w-full border rounded p-2" />
-      </div>
-    </div>
-
-    <button @click="removeCard(index)" class="mt-3 bg-red-500 text-white px-4 py-1 rounded">Remove</button>
-  </div>
-  <button @click="addCard" class="bg-green-600 text-white px-4 py-2 rounded">+ Add Card</button>
-</div>
-
-<!-- NEW ARRIVALS SECTION -->
-<section class="bg-white shadow rounded-xl p-6">
-  <div class="flex justify-between items-center mb-4">
-    <h2 class="text-lg font-semibold">🆕 New Arrivals</h2>
-    <button @click.prevent="addNewArrival" class="btn-green">+ Add Product</button>
-  </div>
-
-  <draggable v-model="form.new_arrivals" handle=".drag-handle" item-key="id" class="space-y-3">
-    <template #item="{ element, index }">
-      <div class="relative border rounded p-3">
-        <button @click.prevent="removeNewArrival(index)" class="absolute top-2 right-2 text-red-500">✕</button>
-
-        <div class="flex items-center gap-2 mb-2">
-          <span class="drag-handle cursor-move text-gray-400">☰</span>
-          <h3 class="font-medium text-gray-700">Product {{ index + 1 }}</h3>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-3">
-          <div>
-            <label class="text-xs text-gray-600">Name</label>
-            <input v-model="element.name" class="input" />
-
-            <label class="text-xs text-gray-600 mt-2">Price Range</label>
-            <input v-model="element.priceRange" class="input" />
-
-            <label class="text-xs text-gray-600 mt-2">Rating (1–5)</label>
-            <input v-model.number="element.rating" type="number" min="1" max="5" class="input" />
+      <!-- CARDS SECTION -->
+      <div class="mt-10">
+        <h2 class="text-2xl font-bold mb-4">🃏 3 Cards Section</h2>
+        <div v-for="(card, index) in form.cards" :key="index" class="border rounded-lg p-4 mb-4 bg-gray-50">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="font-semibold text-sm">Title</label>
+              <input v-model="card.title" type="text" class="w-full border rounded p-2" />
+            </div>
+            <div>
+              <label class="font-semibold text-sm">Price</label>
+              <input v-model="card.price" type="text" class="w-full border rounded p-2" />
+            </div>
+            <div>
+              <label class="font-semibold text-sm">Image URL</label>
+              <input v-model="card.image" type="text" class="w-full border rounded p-2" />
+            </div>
+            <div>
+              <label class="font-semibold text-sm">Button Text</label>
+              <input v-model="card.button_text" type="text" class="w-full border rounded p-2" />
+            </div>
+            <div>
+              <label class="font-semibold text-sm">Button Icon</label>
+              <input v-model="card.button_icon" type="text" class="w-full border rounded p-2" />
+            </div>
           </div>
 
-          <div>
-            <label class="text-xs text-gray-600">Image URL</label>
-            <input v-model="element.image" class="input" placeholder="/assets/images/products/product-image-1-1.jpg" />
-
-            <label class="text-xs text-gray-600 mt-2">Button Icon</label>
-            <input v-model="element.button_icon" class="input" placeholder="fas fa-shopping-bag" />
-          </div>
+          <button @click="removeCard(index)" class="mt-3 bg-red-500 text-white px-4 py-1 rounded">Remove</button>
         </div>
+        <button @click="addCard" class="bg-green-600 text-white px-4 py-2 rounded">+ Add Card</button>
       </div>
-    </template>
-  </draggable>
-</section>
 
-   <!-- 🏞️ BANNERS (LEFT/RIGHT) -->
+      <!-- NEW ARRIVALS SECTION -->
+      <section class="bg-white shadow rounded-xl p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-semibold">🆕 New Arrivals</h2>
+          <button @click.prevent="addNewArrival" class="btn-green">+ Add Product</button>
+        </div>
+
+        <draggable v-model="form.new_arrivals" handle=".drag-handle" item-key="id" class="space-y-3">
+          <template #item="{ element, index }">
+            <div class="relative border rounded p-3">
+              <button @click.prevent="removeNewArrival(index)" class="absolute top-2 right-2 text-red-500">✕</button>
+
+              <div class="flex items-center gap-2 mb-2">
+                <span class="drag-handle cursor-move text-gray-400">☰</span>
+                <h3 class="font-medium text-gray-700">Product {{ index + 1 }}</h3>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-3">
+                <div>
+                  <label class="text-xs text-gray-600">Name</label>
+                  <input v-model="element.name" class="input" />
+
+                  <label class="text-xs text-gray-600 mt-2">Price Range</label>
+                  <input v-model="element.priceRange" class="input" />
+
+                  <label class="text-xs text-gray-600 mt-2">Rating (1–5)</label>
+                  <input v-model.number="element.rating" type="number" min="1" max="5" class="input" />
+                </div>
+
+                <div>
+                  <label class="text-xs text-gray-600">Image URL</label>
+                  <input v-model="element.image" class="input"
+                    placeholder="/assets/images/products/product-image-1-1.jpg" />
+
+                  <label class="text-xs text-gray-600 mt-2">Button Icon</label>
+                  <input v-model="element.button_icon" class="input" placeholder="fas fa-shopping-bag" />
+                </div>
+              </div>
+            </div>
+          </template>
+        </draggable>
+      </section>
+
+      <!-- 🏞️ BANNERS (LEFT/RIGHT) -->
       <section class="bg-white shadow rounded-xl p-6">
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-lg font-semibold">🏞️ Natural Product Banners</h2>
@@ -352,11 +354,7 @@
         <input v-model="form.newsletter.title" class="input" />
 
         <label class="text-xs text-gray-600 mt-2">Subtitle (rich text)</label>
-        <QuillEditor
-          v-model:content="form.newsletter.subtitle"
-          theme="snow"
-          content-type="html"
-        />
+        <QuillEditor v-model:content="form.newsletter.subtitle" theme="snow" content-type="html" />
 
         <div class="grid md:grid-cols-2 gap-3 mt-3">
           <div>
@@ -384,11 +382,7 @@
 
         <div class="mt-3">
           <label class="text-xs text-gray-600">Footer Text (rich)</label>
-          <QuillEditor
-            v-model:content="form.footer.text"
-            theme="snow"
-            content-type="html"
-          />
+          <QuillEditor v-model:content="form.footer.text" theme="snow" content-type="html" />
         </div>
       </section>
 
@@ -415,6 +409,11 @@ import { useForm } from '@inertiajs/vue3'
 import Draggable from 'vuedraggable'
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
+import AdminLayout from '@/Layouts/AdminLayout.vue'
+
+defineOptions({
+  layout: AdminLayout,
+})
 
 /* -------------------------------
    ✅ Props from Inertia
@@ -424,6 +423,9 @@ const props = defineProps({
   bestSellers: Array,
   deals: Array,
   cards: Array,
+  newArrivals: Array,
+  banners: Array,
+  categories: Array
 })
 
 /* -------------------------------
@@ -620,7 +622,7 @@ const iconsText = ref(JSON.stringify(form.icons || {}, null, 2))
 watch(iconsText, v => {
   try {
     form.icons = JSON.parse(v)
-  } catch {}
+  } catch { }
 })
 
 /* -------------------------------
@@ -633,7 +635,7 @@ const preparePayload = () => {
     let links = []
     try {
       links = JSON.parse(b.links_json || '[]')
-    } catch {}
+    } catch { }
     return { title: b.title || '', links }
   })
   return clone
@@ -664,11 +666,12 @@ const save = () => {
 .input {
   @apply w-full border rounded px-3 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-emerald-500;
 }
+
 .btn-primary {
   @apply bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-2 rounded shadow;
 }
+
 .btn-green {
   @apply bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded;
 }
 </style>
-

@@ -152,6 +152,11 @@
 <script setup>
 import { ref } from 'vue'
 
+
+defineOptions({
+  layout: AdminLayout,
+})
+
 const product = ref({
   id: 1,
   name: 'Single product One',

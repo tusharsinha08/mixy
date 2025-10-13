@@ -7,50 +7,7 @@
     </button>
 
     <!-- HEADER -->
-    <header class="border-b border-gray-200">
-      <!-- Topbar -->
-      <div class="bg-gray-100 text-sm py-2">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-4">
-          <p v-html="topbarText"></p>
-          <p class="mt-1 md:mt-0">
-            {{ topbarHelpText }}
-            <a :href="`tel:${topbarPhoneRaw}`" class="text-green-600 font-medium hover:underline">
-              {{ topbarPhoneDisplay }}
-            </a>
-          </p>
-        </div>
-      </div>
 
-      <!-- Navbar -->
-      <div class="max-w-7xl mx-auto flex justify-between items-center py-4 px-4">
-        <a :href="logoUrl" class="flex items-center gap-2">
-          <img :src="logoSrc" alt="logo" class="h-10" />
-        </a>
-
-        <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
-          <template v-for="(link, idx) in navLinks" :key="idx">
-            <a :href="link.url || '#'" class="hover:text-green-600 flex items-center gap-2">
-              <i v-if="link.icon" :class="link.icon"></i>
-              <span v-html="link.label"></span>
-            </a>
-          </template>
-        </nav>
-
-        <div class="flex items-center gap-4">
-          <button @click="onSearchClick" type="button"><i :class="icons.search || 'icon-rt-search'"></i></button>
-          <button @click="onUserClick" type="button"><i :class="icons.user || 'icon-rt-user'"></i></button>
-          <div class="relative">
-            <button @click="onCartClick" type="button">
-              <i :class="icons.cart || 'icon-rt-bag2'"></i>
-              <span v-if="cartCount > 0"
-                class="absolute -top-2 -right-2 bg-green-600 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-                {{ cartCount }}
-              </span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </header>
 
     <!-- HERO -->
     <section class="relative h-[450px] bg-cover bg-center flex items-center"
@@ -311,58 +268,48 @@
         </div>
       </div>
     </section>
-
-    <!-- FOOTER -->
-    <footer class="bg-white pt-14 pb-6 text-gray-700">
-      <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10 border-b pb-10">
-        <!-- Footer Logo & Socials -->
-        <div>
-          <img :src="footer?.logo || logoSrc" alt="Mixy" class="h-10 object-contain mb-3" />
-          <p class="text-sm text-gray-500" v-html="footer?.text || 'Thanks for visiting our organic store!'"></p>
-          <div class="flex gap-3 mt-4">
-            <a v-for="(slink, i) in footer?.socials || []" :key="i" :href="slink.url || '#'" :class="slink.class || ''"
-              class="text-xl">
-              <i :class="slink.icon || 'fab fa-facebook'"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Footer Blocks -->
-        <div v-for="(block, bidx) in (footer?.blocks || []).slice(0, 3)" :key="bidx">
-          <h5 class="font-semibold text-gray-900 mb-4" v-html="block.title || 'Untitled'"></h5>
-          <ul class="space-y-2 text-sm">
-            <li v-for="(link, li) in block.links || []" :key="li">
-              <a :href="link.url || '#'" class="hover:text-green-600" v-html="link.label || 'Link'"></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Bottom Footer -->
-      <div class="max-w-7xl mx-auto px-6 mt-6 text-sm text-gray-500 text-center">
-        <div class="flex items-center justify-between flex-wrap gap-4">
-          <span v-html="footer?.copy_text || 'Copyright © HasThemes. All Rights Reserved.'"></span>
-          <img :src="footer?.payment_image || placeholderImage('payment')" alt="Payment Methods"
-            class="h-6 object-contain" />
-        </div>
-      </div>
-    </footer>
-
   </div>
 </template>
 
 <script>
+import AppLayout from '@/Layouts/AppLayout.vue';
+
 
 
 export default {
   name: "Home",
+  layout: AppLayout,
   props: {
-    // Inertia will pass 'settings' (can be null). Provide safe default structure to avoid crashes.
     settings: {
       type: Object,
       default: () => ({})
+    },
+    bestSellers: {
+      type: Array,
+      default: () => []
+    },
+    deals: {
+      type: Array,
+      default: () => []
+    },
+    cards: {
+      type: Array,
+      default: () => []
+    },
+    newArrivals: {
+      type: Array,
+      default: () => []
+    },
+    banners: {
+      type: Array,
+      default: () => []
+    },
+    categories: {
+      type: Array,
+      default: () => []
     }
   },
+
   data() {
     return {
       defaultLogo: '/assets/images/logo.png',
@@ -379,45 +326,13 @@ export default {
       return this.settings?.icons || {};
     },
 
-    // TOPBAR
-    topbarText() {
-      return this.settings?.topbar_text || 'Free shipping on orders over $25.';
-    },
-    topbarPhoneRaw() {
-      return this.settings?.topbar_phone || '888554168';
-    },
-    topbarPhoneDisplay() {
-      // allow storing formatted display number or fallback
-      return this.settings?.topbar_phone_display || this.settings?.topbar_phone || '+8 88 55 4168';
-    },
-    topbarHelpText() {
-      return (this.settings?.topbar_help_text || 'Need help? Call Us:');
-    },
+    
 
-    // LOGO
-    logoSrc() {
-      return this.settings?.logo || this.defaultLogo;
-    },
-    logoUrl() {
-      return this.settings?.logo_url || '/';
-    },
+    
 
-    // NAV
-    navLinks() {
-      if (Array.isArray(this.settings?.nav_links) && this.settings.nav_links.length) {
-        return this.settings.nav_links;
-      }
-      return [
-        { label: 'Home', url: '/', icon: null },
-        { label: 'Shop', url: '/shop', icon: null },
-        { label: 'About', url: '/about', icon: null },
-        { label: 'Contact', url: '/contact', icon: null }
-      ];
-    },
+    
 
-    cartCount() {
-      return (typeof this.settings?.cart_count === 'number') ? this.settings.cart_count : this.cartCountLocal;
-    },
+    
 
     // HERO
     heroImage() {
@@ -439,7 +354,7 @@ export default {
       return this.settings?.hero_button_text || 'Shop Now';
     },
     heroButtonUrl() {
-      return this.settings?.hero_button_url || '#';
+      return this.settings?.hero_button_url || '/shop';
     },
     heroButtonIcon() {
       return this.settings?.hero_button_icon || 'fas fa-arrow-right';
@@ -574,26 +489,7 @@ export default {
       ];
     },
 
-    // FOOTER
-    footer() {
-      return this.settings?.footer || {
-        logo: null,
-        text: 'Thanks for visiting our organic store!',
-        socials: [
-          { icon: 'fab fa-facebook', url: '#', class: 'text-blue-600' },
-          { icon: 'fab fa-twitter', url: '#', class: 'text-sky-400' },
-          { icon: 'fab fa-instagram', url: '#', class: 'text-pink-500' },
-          { icon: 'fab fa-youtube', url: '#', class: 'text-red-500' }
-        ],
-        blocks: [
-          { title: 'INFORMATION', links: [{ label: 'Contact Us', url: '#' }, { label: 'About Us', url: '#' }, { label: 'Privacy Policy', url: '#' }, { label: 'Wishlist', url: '#' }, { label: 'Checkout', url: '#' }] },
-          { title: 'MY ACCOUNT', links: [{ label: 'Orders', url: '#' }, { label: 'Downloads', url: '#' }, { label: 'Addresses', url: '#' }, { label: 'Account details', url: '#' }, { label: 'Lost password', url: '#' }] },
-          { title: 'DOWNLOAD OUR APP', links: [{ label: 'App Store', url: '#' }, { label: 'Google Play', url: '#' }] }
-        ],
-        copy_text: 'Copyright © HasThemes. All Rights Reserved.',
-        payment_image: '/assets/images/others/payment.png'
-      };
-    }
+    
   },
   methods: {
     scrollToTop() {
@@ -616,7 +512,6 @@ export default {
     },
     onSearchClick() { },
     onUserClick() { },
-    onCartClick() { },
     onSubscribe() {
       if (!this.newsletterEmail) return;
       // Example: Inertia.post('/newsletter-subscribe', { email: this.newsletterEmail })

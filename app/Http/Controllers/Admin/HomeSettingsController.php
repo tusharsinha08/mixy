@@ -16,10 +16,14 @@ use Inertia\Inertia;
 
 class HomeSettingsController extends Controller
 {
-    
+    /**
+     * Display the edit page for home settings.
+     */
     public function edit()
     {
         $settings = HomeSetting::first() ?? HomeSetting::create([]);
+
+        // todo: add hero section heroTable,seeder migration everything        
 
         /* -------------------------
          *  BEST SELLERS
@@ -63,8 +67,8 @@ class HomeSettingsController extends Controller
         if ($deals->isEmpty()) {
             $defaultDeals = [
                 [
-                    'title' => 'Organic Coconut',
-                    'price' => '$10.00 - $70.00',
+                    'name' => 'Organic Coconut',
+                    'price_range' => '$10.00 - $70.00',
                     'image' => '/assets/images/products/product-image-7-1.jpg',
                     'sold' => 365,
                     'available' => 634,
@@ -72,8 +76,8 @@ class HomeSettingsController extends Controller
                     'rating' => 4,
                 ],
                 [
-                    'title' => 'Almond Organic',
-                    'price' => '$10.00 - $70.00',
+                    'name' => 'Almond Organic',
+                    'price_range' => '$10.00 - $70.00',
                     'image' => '/assets/images/products/product-image-8-1.jpg',
                     'sold' => 220,
                     'available' => 480,
@@ -97,6 +101,7 @@ class HomeSettingsController extends Controller
                     'image' => '/assets/images/products/product-image-2-1.jpg',
                     'button_text' => 'Shop Now',
                     'button_icon' => 'fas fa-arrow-right',
+                    'button_url' => '#',
                 ],
                 [
                     'title' => 'Dried Mango',
@@ -104,6 +109,7 @@ class HomeSettingsController extends Controller
                     'image' => '/assets/images/products/product-image-1-1.jpg',
                     'button_text' => 'Shop Now',
                     'button_icon' => 'fas fa-arrow-right',
+                    'button_url' => '#',
                 ],
             ];
             HomeCard::insert($defaultCards);
@@ -134,7 +140,7 @@ class HomeSettingsController extends Controller
         }
 
         /* -------------------------
-         *  BANNERS (Natural Product)
+         *  BANNERS
          * ------------------------- */
         $banners = HomeBanner::all();
         if ($banners->isEmpty()) {
@@ -159,7 +165,7 @@ class HomeSettingsController extends Controller
         }
 
         /* -------------------------
-         *  CATEGORIES (Popular)
+         *  CATEGORIES
          * ------------------------- */
         $categories = HomeCategory::all();
         if ($categories->isEmpty()) {
@@ -184,14 +190,18 @@ class HomeSettingsController extends Controller
         ]);
     }
 
+    /**
+     * Update home settings and related sections.
+     */
     public function update(Request $request)
     {
         $settings = HomeSetting::first() ?? new HomeSetting();
         $data = $request->except([
-            'logo', 'hero_image', 'best_sellers', 'deals', 'cards', 'new_arrivals', 'banners', 'categories'
+            'logo', 'hero_image',
+            'best_sellers', 'deals', 'cards', 'new_arrivals', 'banners', 'categories'
         ]);
 
-        /* FILE UPLOADS */
+        // FILE UPLOADS
         foreach (['logo', 'hero_image'] as $fileField) {
             if ($request->hasFile($fileField)) {
                 $path = $request->file($fileField)->store('uploads/home', 'public');
@@ -201,22 +211,22 @@ class HomeSettingsController extends Controller
 
         $settings->fill($data)->save();
 
-        /* BEST SELLERS */
+        // BEST SELLERS
         if ($request->has('best_sellers')) {
             HomeBestSeller::truncate();
             foreach ($request->input('best_sellers') as $item) {
                 HomeBestSeller::create([
                     'name' => $item['name'] ?? '',
-                    'price_range' => $item['priceRange'] ?? '',
+                    'price_range' => $item['price_range'] ?? $item['priceRange'] ?? '',
                     'image' => $item['image'] ?? null,
                     'rating' => $item['rating'] ?? 5,
-                    'button_text' => $item['button_text'] ?? 'Add to cart',
+                    'button_text' => $item['button_text'] ?? 'Buy Now',
                     'button_icon' => $item['button_icon'] ?? 'fas fa-shopping-bag',
                 ]);
             }
         }
 
-        /* DEALS */
+        // DEALS
         if ($request->has('deals')) {
             HomeDeal::truncate();
             foreach ($request->input('deals') as $item) {
@@ -232,7 +242,7 @@ class HomeSettingsController extends Controller
             }
         }
 
-        /* CARDS */
+        // CARDS
         if ($request->has('cards')) {
             HomeCard::truncate();
             foreach ($request->input('cards') as $item) {
@@ -247,34 +257,34 @@ class HomeSettingsController extends Controller
             }
         }
 
-        /* NEW ARRIVALS */
+        // NEW ARRIVALS
         if ($request->has('new_arrivals')) {
             HomeNewArrival::truncate();
             foreach ($request->input('new_arrivals') as $item) {
                 HomeNewArrival::create([
                     'name' => $item['name'] ?? '',
-                    'price_range' => $item['priceRange'] ?? '',
+                    'price_range' => $item['price_range'] ?? $item['priceRange'] ?? '',
                     'image' => $item['image'] ?? null,
                     'rating' => $item['rating'] ?? 4,
                 ]);
             }
         }
 
-        /* BANNERS */
+        // BANNERS
         if ($request->has('banners')) {
             HomeBanner::truncate();
             foreach ($request->input('banners') as $item) {
                 HomeBanner::create([
                     'position' => $item['position'] ?? 'left',
-                    'title' => $item['title'] ?? 'Strawberry Velvet Cake',
-                    'subtitle' => $item['subtitle'] ?? '100% Natural Organic',
-                    'price' => $item['price'] ?? '$30.66',
+                    'title' => $item['title'] ?? '',
+                    'subtitle' => $item['subtitle'] ?? '',
+                    'price' => $item['price'] ?? '',
                     'image' => $item['image'] ?? null,
                 ]);
             }
         }
 
-        /* CATEGORIES */
+        // CATEGORIES
         if ($request->has('categories')) {
             HomeCategory::truncate();
             foreach ($request->input('categories') as $item) {

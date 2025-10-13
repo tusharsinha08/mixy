@@ -239,8 +239,13 @@
 </template>
 
 <script setup>
+import AppLayout from '@/Layouts/AppLayout.vue';
 import { Head, useForm, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
+
+defineOptions({
+  layout: AppLayout,
+})
 
 const processing = ref(false);
 const successMessage = ref('');

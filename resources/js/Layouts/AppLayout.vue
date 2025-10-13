@@ -1,10 +1,10 @@
 <template>
   <div>
-    <Navbar />
+    <Navbar :settings="settings" />
     <main>
       <slot /> <!-- Page content will render here -->
     </main>
-    <Footer />
+    <Footer :settings="settings" />
   </div>
 </template>
 
@@ -13,9 +13,16 @@ import Navbar from '@/Components/Navbar.vue'
 import Footer from '@/Components/Footer.vue'
 
 export default {
+  name: "AppLayout",
   components: {
     Navbar,
     Footer
+  },
+  props: {
+    settings: {
+      type: Object,
+      default: () => ({})
+    }
   }
 }
 </script>

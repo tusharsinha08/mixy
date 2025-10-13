@@ -1,27 +1,39 @@
 <template>
   <div class="min-h-screen bg-gray-50 py-10">
     <!-- Scroll to top -->
-    <button v-show="showScrollTop" id="scroll-top" @click="scrollToTop"
-      class="fixed bottom-5 right-5 p-3 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 transition-colors z-50">
+    <button
+      v-show="showScrollTop"
+      id="scroll-top"
+      @click="scrollToTop"
+      class="fixed bottom-5 right-5 p-3 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 transition-colors z-50"
+    >
       <i class="icon-rt-arrow-up"></i>
     </button>
 
     <div class="max-w-7xl mx-auto px-4">
       <!-- Header -->
-       <div>
-          <h1 class="text-2xl font-bold text-gray-800 mb-4 sm:mb-0">Shop</h1>
-          <p class=" mb-4 sm:mb-0">Home > Shop</p>
-        </div>
-      <div class="flex flex-col md:justify-end sm:flex-row sm:items-center sm:justify-between mb-8 mt-6">
-        
+      <div>
+        <h1 class="text-2xl font-bold text-gray-800 mb-4 sm:mb-0">
+          Shop
+          <span v-if="searchQuery" class="text-green-600">— "{{ searchQuery }}"</span>
+        </h1>
+        <p class="mb-4 sm:mb-0">Home > Shop</p>
+      </div>
 
+      <div class="flex flex-col md:justify-end sm:flex-row sm:items-center sm:justify-between mb-8 mt-6">
         <!-- Search + Filter -->
         <div class="flex flex-col sm:flex-row gap-3">
-          <input v-model="searchQuery" type="text" placeholder="Search products..."
-            class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent w-full sm:w-64" />
+          <input
+            v-model="searchQuery"
+            type="text"
+            placeholder="Search products..."
+            class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent w-full sm:w-64"
+          />
 
-          <select v-model="selectedCategory"
-            class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:ring-2 focus:ring-green-500 focus:border-transparent">
+          <select
+            v-model="selectedCategory"
+            class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+          >
             <option value="">All Categories</option>
             <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
           </select>
@@ -31,15 +43,17 @@
       <!-- Results count -->
       <div class="mb-6 text-gray-600">
         Showing {{ filteredProducts.length }} of {{ products.length }} products
-        <span v-if="searchQuery || selectedCategory">
-          (filtered)
-        </span>
+        <span v-if="searchQuery || selectedCategory">(filtered)</span>
       </div>
 
       <!-- Products Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-        <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product"
-          @add-to-cart="handleAddToCart" />
+        <ProductCard
+          v-for="product in filteredProducts"
+          :key="product.id"
+          :product="product"
+          @add-to-cart="handleAddToCart"
+        />
       </div>
 
       <!-- Empty state -->
@@ -47,8 +61,10 @@
         <div class="text-6xl mb-4">😕</div>
         <p class="text-xl font-medium mb-2">No products found</p>
         <p class="text-gray-600 mb-4">Try adjusting your search or filter criteria</p>
-        <button @click="clearFilters"
-          class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">
+        <button
+          @click="clearFilters"
+          class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
+        >
           Clear Filters
         </button>
       </div>
@@ -60,6 +76,12 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import ProductCard from '@/Components/ProductCard.vue'
 
+// ✅ Get search keyword from URL (from Navbar search redirect)
+const urlParams = new URLSearchParams(window.location.search)
+const searchQuery = ref(urlParams.get('search') || '')
+
+const selectedCategory = ref('')
+const showScrollTop = ref(false)
 
 const products = ref([
   {
@@ -99,13 +121,7 @@ const products = ref([
   },
 ])
 
-const searchQuery = ref('')
-const selectedCategory = ref('')
-const showScrollTop = ref(false)
-
-const categories = computed(() =>
-  [...new Set(products.value.map(p => p.category))].sort()
-)
+const categories = computed(() => [...new Set(products.value.map(p => p.category))].sort())
 
 const filteredProducts = computed(() => {
   return products.value.filter(p => {
@@ -116,7 +132,6 @@ const filteredProducts = computed(() => {
 })
 
 function handleAddToCart(product) {
-  // You can integrate with your cart store here
   alert(`Added "${product.name}" to cart!`)
 }
 
