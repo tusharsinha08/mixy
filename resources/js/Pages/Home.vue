@@ -115,39 +115,27 @@
     </section>
 
     <!-- BEST SELLERS -->
-    <section class="py-12 bg-white" v-if="bestSellersList.length">
-      <div class="max-w-7xl mx-auto px-4">
-        <h2 class="text-2xl font-extrabold text-gray-900" v-html="bestSellersTitle"></h2>
-        <p class="text-gray-500 mb-8" v-html="bestSellersSubtitle"></p>
+     <section class="py-12 bg-white" v-if="bestSellersList && bestSellersList.length">
+     <div class="max-w-7xl mx-auto px-4">
+       <h2 class="text-2xl font-extrabold text-gray-900" v-html="settings?.best_sellers_title || 'Best Sellers'"></h2>
+       <p class="text-gray-500 mb-8" v-html="settings?.best_sellers_subtitle || 'Our most popular products'"></p>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-          <div
-            v-for="(product, index) in bestSellersList"
-            :key="index"
-            class="border rounded-xl p-6 hover:shadow-md transition relative flex flex-col items-center text-center"
-          >
-            <img
-              :src="product.image || placeholderImage('product')"
-              :alt="product.name"
-              class="object-contain mb-3"
-            />
-            <div class="flex justify-center space-x-1 text-yellow-400 mb-2">
-              <i v-for="n in (product.rating || 4)" :key="n" class="fas fa-star"></i>
-              <i class="far fa-star"></i>
-            </div>
-            <h4 class="font-semibold text-gray-800 text-sm mb-1" v-html="product.name"></h4>
-            <p class="text-red-600 font-semibold text-sm" v-html="product.priceRange"></p>
-            <button
-              @click="addToCart(product)"
-              class="absolute bottom-4 right-4 bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-green-700 transition"
-              :title="product.button_text || 'Add to cart'"
-            >
-              <i :class="product.button_icon || 'fas fa-shopping-bag'"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
+
+       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
+         <div v-for="(product, index) in bestSellersList" :key="index" class="border rounded-xl p-6 hover:shadow-md transition relative flex flex-col items-center text-center">
+           <img :src="product?.image || placeholderImage('product')" :alt="product?.name || 'product'" class="object-contain mb-3 h-28 w-full" />
+           <div class="flex justify-center space-x-1 text-yellow-400 mb-2">
+             <i v-for="n in (product.rating || 4)" :key="n" class="fas fa-star"></i>
+           </div>
+           <h4 class="font-semibold text-gray-800 text-sm mb-1" v-html="product?.name || product?.title || 'Product'"></h4>
+           <p class="text-red-600 font-semibold text-sm" v-html="product?.price_range || product?.priceRange || product?.price || ''"></p>
+           <button @click="addToCart(product)" class="absolute bottom-4 right-4 bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-green-700 transition" :title="product?.button_text || 'Add to cart'">
+             <i :class="product?.button_icon || 'fas fa-shopping-bag'"></i>
+           </button>
+         </div>
+       </div>
+     </div>
+   </section>
 
     <!-- SUPER DEALS -->
     <section class="py-12 bg-gray-50" v-if="dealsList.length">
@@ -427,6 +415,11 @@
 </template>
 
 <script>
+import { router } from '@inertiajs/vue3'
+
+const refreshPage = () => {
+  router.reload({ only: ['settings', 'bestSellers', 'deals', 'cards', 'newArrivals', 'banners', 'categories'] })
+}
 export default {
   name: "Home",
   props: {
@@ -546,6 +539,7 @@ export default {
     bestSellersSubtitle() {
       return this.settings?.best_sellers_subtitle || 'Add bestselling products to weekly line up';
     },
+   
 
     // DEALS
     dealsList() {
@@ -698,6 +692,7 @@ export default {
     }
   }
 };
+
 </script>
 
 <style scoped>

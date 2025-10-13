@@ -132,7 +132,7 @@
             <input v-model="element.name" class="input" />
 
             <label class="text-xs text-gray-600 mt-2">Price Range</label>
-            <input v-model="element.priceRange" class="input" />
+            <input v-model="element.price_range" class="input" />
 
             <label class="text-xs text-gray-600 mt-2">Rating (1–5)</label>
             <input v-model.number="element.rating" type="number" min="1" max="5" class="input" />
@@ -158,11 +158,11 @@
     <div class="grid grid-cols-2 gap-4">
       <div>
         <label class="font-semibold text-sm">Title</label>
-        <input v-model="deal.title" type="text" class="w-full border rounded p-2" />
+        <input v-model="deal.name" type="text" class="w-full border rounded p-2" />
       </div>
       <div>
         <label class="font-semibold text-sm">Price</label>
-        <input v-model="deal.price" type="text" class="w-full border rounded p-2" />
+        <input v-model="deal.price_range" type="text" class="w-full border rounded p-2" />
       </div>
       <div>
         <label class="font-semibold text-sm">Sold</label>
@@ -246,7 +246,7 @@
             <input v-model="element.name" class="input" />
 
             <label class="text-xs text-gray-600 mt-2">Price Range</label>
-            <input v-model="element.priceRange" class="input" />
+            <input v-model="element.price_range" class="input" />
 
             <label class="text-xs text-gray-600 mt-2">Rating (1–5)</label>
             <input v-model.number="element.rating" type="number" min="1" max="5" class="input" />
@@ -415,20 +415,29 @@ import { useForm } from '@inertiajs/vue3'
 import Draggable from 'vuedraggable'
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
+import AdminLayout from '@/Layouts/AdminLayout.vue'
 
 /* -------------------------------
-   ✅ Props from Inertia
+   Props from Inertia
+--------------------------------- */
+defineOptions({
+  layout: AdminLayout,
+})
+
+/* -------------------------------
+    Props from Inertia
 --------------------------------- */
 const props = defineProps({
   settings: Object,
   bestSellers: Array,
   deals: Array,
   cards: Array,
+  newArrivals: Array,
+  banners: Array,
+  categories: Array
 })
 
-/* -------------------------------
-   ✅ Safe JSON parsing helpers
---------------------------------- */
+
 function safeParseJSON(value) {
   if (!value) return value
   if (typeof value === 'string') {
@@ -446,14 +455,14 @@ function normalizeItem(item = {}) {
 }
 
 /* -------------------------------
-   ✅ Prepare default form values
+    Prepare default form values
 --------------------------------- */
 const defaultSettings = (s = {}) => {
   const nav_links = safeParseJSON(s.nav_links) || []
   const offer_banners = safeParseJSON(s.offer_banners) || []
   const new_arrivals = safeParseJSON(s.new_arrivals) || []
   const cards = safeParseJSON(s.cards) || []
-  const banners = safeParseJSON(s.banners) || [] // ✅ NEW
+  const banners = safeParseJSON(s.banners) || [] 
   const categories = safeParseJSON(s.categories) || []
   const featured_category = safeParseJSON(s.featured_category) || {}
   const newsletter =
@@ -474,8 +483,8 @@ const defaultSettings = (s = {}) => {
     offer_banners: offer_banners.map(normalizeItem),
     new_arrivals: new_arrivals.map(normalizeItem),
     cards: cards.map(normalizeItem),
-    banners: banners.map(normalizeItem), // ✅ NEW
-    categories: categories.map(normalizeItem), // ✅ NEW
+    banners: banners.map(normalizeItem), 
+    categories: categories.map(normalizeItem), 
     featured_category,
     newsletter,
     footer,
@@ -490,7 +499,7 @@ initial.footer.blocks = (initial.footer.blocks || []).map(b => ({
 }))
 
 /* -------------------------------
-   ✅ Setup form
+    Setup form
 --------------------------------- */
 const form = useForm({
   ...initial,
@@ -504,7 +513,7 @@ const form = useForm({
 const preview = ref({ logo: null, hero_image: null })
 
 /* -------------------------------
-   ✅ File upload preview
+   File upload preview
 --------------------------------- */
 const onFileChange = (e, field) => {
   const file = e.target.files?.[0]
@@ -514,7 +523,7 @@ const onFileChange = (e, field) => {
 }
 
 /* -------------------------------
-   ✅ Helpers
+    Helpers
 --------------------------------- */
 const addNav = () => form.nav_links.push(normalizeItem({ label: '', url: '' }))
 const removeNav = i => form.nav_links.splice(i, 1)
@@ -534,13 +543,13 @@ const removeOfferBanner = i => form.offer_banners.splice(i, 1)
 const removeFooterBlock = i => form.footer.blocks.splice(i, 1)
 
 /* -------------------------------
-   ✅ BEST SELLERS
+    BEST SELLERS
 --------------------------------- */
 const addBestSeller = () =>
   form.best_sellers.push({
     id: Math.random().toString(36).substr(2, 9),
     name: '',
-    priceRange: '',
+    price_range: '',
     image: '',
     rating: 5,
     button_text: 'Buy Now',
@@ -549,12 +558,12 @@ const addBestSeller = () =>
 const removeBestSeller = i => form.best_sellers.splice(i, 1)
 
 /* -------------------------------
-   ✅ DEALS + CARDS
+    DEALS + CARDS
 --------------------------------- */
 const addDeal = () =>
   form.deals.push({
-    title: '',
-    price: '',
+    name: '',
+    price_range: '',
     image: '',
     sold: 0,
     available: 0,
@@ -565,7 +574,7 @@ const removeDeal = i => form.deals.splice(i, 1)
 
 const addCard = () =>
   form.cards.push({
-    title: '',
+    name: '',
     price: '',
     image: '',
     button_text: 'Shop Now',
@@ -574,13 +583,13 @@ const addCard = () =>
 const removeCard = i => form.cards.splice(i, 1)
 
 /* -------------------------------
-    ✅ NEW ARRIVALS
+     NEW ARRIVALS
 --------------------------------- */
 const addNewArrival = () =>
   form.new_arrivals.push({
     id: Math.random().toString(36).substr(2, 9),
     name: '',
-    priceRange: '',
+    price_range: '',
     image: '',
     rating: 5,
     button_icon: 'fas fa-shopping-bag',
@@ -588,7 +597,7 @@ const addNewArrival = () =>
 const removeNewArrival = i => form.new_arrivals.splice(i, 1)
 
 /* -------------------------------
-   ✅ NATURAL PRODUCT BANNERS
+    NATURAL PRODUCT BANNERS
 --------------------------------- */
 const addBanner = () =>
   form.banners.push({
@@ -602,7 +611,7 @@ const addBanner = () =>
 const removeBanner = i => form.banners.splice(i, 1)
 
 /* -------------------------------
-   ✅ POPULAR CATEGORIES
+    POPULAR CATEGORIES
 --------------------------------- */
 const addCategory = () =>
   form.categories.push({
@@ -614,7 +623,7 @@ const addCategory = () =>
 const removeCategory = i => form.categories.splice(i, 1)
 
 /* -------------------------------
-    ✅ ICONS JSON
+    ICONS JSON
 --------------------------------- */
 const iconsText = ref(JSON.stringify(form.icons || {}, null, 2))
 watch(iconsText, v => {
@@ -624,7 +633,7 @@ watch(iconsText, v => {
 })
 
 /* -------------------------------
-   ✅ Prepare payload + Save
+    Prepare payload + Save
 --------------------------------- */
 const preparePayload = () => {
   const clone = JSON.parse(JSON.stringify(form))

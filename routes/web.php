@@ -6,22 +6,11 @@ use Inertia\Inertia;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\HomeSettingsController;
 use App\Http\Controllers\Admin\HomeBestSellerController;
-use App\Models\HomeSetting;
+use App\Http\Controllers\HomeController;
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
-Route::get('/', function () {
-    $settings = HomeSetting::first() ?? new HomeSetting();
-
-    return Inertia::render('Home', [
-        'settings' => $settings,
-    ]);
-})->name('home');
-
-/*
-|--------------------------------------------------------------------------
-| Authenticated Admin Routes
-|--------------------------------------------------------------------------
-*/
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // 🧭 Admin Dashboard

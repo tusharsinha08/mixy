@@ -29,7 +29,7 @@ createInertiaApp({
         const vueApp = createApp({ render: () => h(App, props) });
 
         vueApp.use(plugin);
-        vueApp.use(ZiggyVue); // ✅ Important
+        vueApp.use(ZiggyVue); 
 
         vueApp.mount(el);
         return vueApp;
