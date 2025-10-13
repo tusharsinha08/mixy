@@ -11,7 +11,6 @@ use App\Models\HomeNewArrival;
 use App\Models\HomeBanner;
 use App\Models\HomeCategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class HomeSettingsController extends Controller
@@ -181,12 +180,12 @@ class HomeSettingsController extends Controller
 
         return Inertia::render('AdminPanel/HomeSetting', [
             'settings' => $settings,
-            'bestSellers' => $bestSellers,
-            'deals' => $deals,
-            'cards' => $cards,
-            'newArrivals' => $newArrivals,
-            'banners' => $banners,
-            'categories' => $categories,
+            'bestSellers' => HomeBestSeller::all(),
+            'deals' => HomeDeal::all(),
+            'cards' => HomeCard::all(),
+            'newArrivals' => HomeNewArrival::all(),
+            'banners' => HomeBanner::all(),
+            'categories' => HomeCategory::all(),
         ]);
     }
 
@@ -195,13 +194,20 @@ class HomeSettingsController extends Controller
      */
     public function update(Request $request)
     {
+        // ✅ Save main settings 
         $settings = HomeSetting::first() ?? new HomeSetting();
         $data = $request->except([
-            'logo', 'hero_image',
-            'best_sellers', 'deals', 'cards', 'new_arrivals', 'banners', 'categories'
+            'logo',
+            'hero_image',
+            'best_sellers',
+            'deals',
+            'cards',
+            'new_arrivals',
+            'banners',
+            'categories'
         ]);
 
-        // FILE UPLOADS
+        // ✅ Handle image uploads
         foreach (['logo', 'hero_image'] as $fileField) {
             if ($request->hasFile($fileField)) {
                 $path = $request->file($fileField)->store('uploads/home', 'public');
@@ -227,29 +233,32 @@ class HomeSettingsController extends Controller
         }
 
         // DEALS
+        
         if ($request->has('deals')) {
             HomeDeal::truncate();
-            foreach ($request->input('deals') as $item) {
+            foreach ($request->input('deals', []) as $item) {
                 HomeDeal::create([
-                    'title' => $item['title'] ?? '',
-                    'price' => $item['price'] ?? '',
-                    'image' => $item['image'] ?? null,
+                    'name' => $item['name'] ?? '',
+                    'price_range' => $item['price_range'] ?? '',
+                    'image' => $item['image'] ?? '',
                     'sold' => $item['sold'] ?? 0,
                     'available' => $item['available'] ?? 0,
                     'progress' => $item['progress'] ?? 0,
-                    'rating' => $item['rating'] ?? 0,
+                    'rating' => $item['rating'] ?? 5,
                 ]);
             }
         }
 
-        // CARDS
+        /* -----------------------------------------------------------
+         *  CARDS
+         * ----------------------------------------------------------- */
         if ($request->has('cards')) {
             HomeCard::truncate();
-            foreach ($request->input('cards') as $item) {
+            foreach ($request->input('cards', []) as $item) {
                 HomeCard::create([
                     'title' => $item['title'] ?? '',
                     'price' => $item['price'] ?? '',
-                    'image' => $item['image'] ?? null,
+                    'image' => $item['image'] ?? '',
                     'button_text' => $item['button_text'] ?? 'Shop Now',
                     'button_icon' => $item['button_icon'] ?? 'fas fa-arrow-right',
                     'button_url' => $item['button_url'] ?? '#',
@@ -257,45 +266,51 @@ class HomeSettingsController extends Controller
             }
         }
 
-        // NEW ARRIVALS
+        /* -----------------------------------------------------------
+         *  NEW ARRIVALS
+         * ----------------------------------------------------------- */
         if ($request->has('new_arrivals')) {
             HomeNewArrival::truncate();
-            foreach ($request->input('new_arrivals') as $item) {
+            foreach ($request->input('new_arrivals', []) as $item) {
                 HomeNewArrival::create([
                     'name' => $item['name'] ?? '',
-                    'price_range' => $item['price_range'] ?? $item['priceRange'] ?? '',
-                    'image' => $item['image'] ?? null,
+                    'price_range' => $item['price_range'] ?? '',
+                    'image' => $item['image'] ?? '',
                     'rating' => $item['rating'] ?? 4,
                 ]);
             }
         }
 
-        // BANNERS
+        /* -----------------------------------------------------------
+         *  BANNERS
+         * ----------------------------------------------------------- */
         if ($request->has('banners')) {
             HomeBanner::truncate();
-            foreach ($request->input('banners') as $item) {
+            foreach ($request->input('banners', []) as $item) {
                 HomeBanner::create([
                     'position' => $item['position'] ?? 'left',
                     'title' => $item['title'] ?? '',
                     'subtitle' => $item['subtitle'] ?? '',
                     'price' => $item['price'] ?? '',
-                    'image' => $item['image'] ?? null,
+                    'image' => $item['image'] ?? '',
                 ]);
             }
         }
 
-        // CATEGORIES
+        /* -----------------------------------------------------------
+         *  CATEGORIES
+         * ----------------------------------------------------------- */
         if ($request->has('categories')) {
             HomeCategory::truncate();
-            foreach ($request->input('categories') as $item) {
+            foreach ($request->input('categories', []) as $item) {
                 HomeCategory::create([
                     'name' => $item['name'] ?? '',
-                    'image' => $item['image'] ?? null,
+                    'image' => $item['image'] ?? '',
                     'products' => $item['products'] ?? 0,
                 ]);
             }
         }
 
-        return redirect()->back()->with('success', '✅ Home settings updated successfully!');
+        return redirect()->back()->with('success', '✅ Home settings updated successfully and saved!');
     }
 }

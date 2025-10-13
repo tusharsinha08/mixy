@@ -53,10 +53,10 @@
     </section>
 
     <!-- BEST SELLERS -->
-    <section class="py-12 bg-white" v-if="bestSellersList.length">
-      <div class="max-w-7xl mx-auto px-4">
-        <h2 class="text-2xl font-extrabold text-gray-900" v-html="bestSellersTitle"></h2>
-        <p class="text-gray-500 mb-8" v-html="bestSellersSubtitle"></p>
+     <section class="py-12 bg-white" v-if="bestSellersList && bestSellersList.length">
+     <div class="max-w-7xl mx-auto px-4">
+       <h2 class="text-2xl font-extrabold text-gray-900" v-html="settings?.best_sellers_title || 'Best Sellers'"></h2>
+       <p class="text-gray-500 mb-8" v-html="settings?.best_sellers_subtitle || 'Our most popular products'"></p>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
           <div v-for="(product, index) in bestSellersList" :key="index"
@@ -388,6 +388,7 @@ export default {
     bestSellersSubtitle() {
       return this.settings?.best_sellers_subtitle || 'Add bestselling products to weekly line up';
     },
+   
 
     // DEALS
     dealsList() {
@@ -520,4 +521,5 @@ export default {
     }
   }
 };
+
 </script>
