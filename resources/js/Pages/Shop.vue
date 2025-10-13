@@ -9,12 +9,18 @@
     >
       <i class="icon-rt-arrow-up"></i>
     </button>
-    
+
     <div class="max-w-7xl mx-auto px-4">
       <!-- Header -->
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 mt-6">
-        <h1 class="text-2xl font-bold text-gray-800 mb-4 sm:mb-0">🛍️ Shop</h1>
+      <div>
+        <h1 class="text-2xl font-bold text-gray-800 mb-4 sm:mb-0">
+          Shop
+          <span v-if="searchQuery" class="text-green-600">— "{{ searchQuery }}"</span>
+        </h1>
+        <p class="mb-4 sm:mb-0">Home > Shop</p>
+      </div>
 
+      <div class="flex flex-col md:justify-end sm:flex-row sm:items-center sm:justify-between mb-8 mt-6">
         <!-- Search + Filter -->
         <div class="flex flex-col sm:flex-row gap-3">
           <input
@@ -37,13 +43,11 @@
       <!-- Results count -->
       <div class="mb-6 text-gray-600">
         Showing {{ filteredProducts.length }} of {{ products.length }} products
-        <span v-if="searchQuery || selectedCategory">
-          (filtered)
-        </span>
+        <span v-if="searchQuery || selectedCategory">(filtered)</span>
       </div>
 
       <!-- Products Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
         <ProductCard
           v-for="product in filteredProducts"
           :key="product.id"
@@ -57,7 +61,7 @@
         <div class="text-6xl mb-4">😕</div>
         <p class="text-xl font-medium mb-2">No products found</p>
         <p class="text-gray-600 mb-4">Try adjusting your search or filter criteria</p>
-        <button 
+        <button
           @click="clearFilters"
           class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
         >
@@ -71,54 +75,53 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import ProductCard from '@/Components/ProductCard.vue'
-import AppLayout from '@/Layouts/AppLayout.vue'
 
+// ✅ Get search keyword from URL (from Navbar search redirect)
+const urlParams = new URLSearchParams(window.location.search)
+const searchQuery = ref(urlParams.get('search') || '')
+
+const selectedCategory = ref('')
+const showScrollTop = ref(false)
 
 const products = ref([
   {
     id: 1,
-    name: 'Wireless Headphones',
-    price: 99,
-    category: 'Electronics',
-    image: 'https://images.unsplash.com/photo-1585386959984-a41552231693?auto=format&fit=crop&w=500&q=60',
+    name: "Fresh organic kiwi",
+    priceRange: "$10.00 - $70.00",
+    image: "/assets/images/products/product-image-2-1.jpg",
+    category: "Fruits",
   },
   {
     id: 2,
-    name: 'Sneakers',
-    price: 79,
-    category: 'Fashion',
-    image: 'https://images.unsplash.com/photo-1589187155479-3e8a721b52a8?auto=format&fit=crop&w=500&q=60',
+    name: "Dried mango",
+    priceRange: "$10.00 - $70.00",
+    image: "/assets/images/products/product-image-1-1.jpg",
+    category: "Dried Fruits",
   },
   {
     id: 3,
-    name: 'Smart Watch',
-    price: 129,
-    category: 'Electronics',
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=500&q=60',
+    name: "Dried banana",
+    priceRange: "$60.00 - $80.00",
+    image: "/assets/images/products/product-image-3-1.jpg",
+    category: "Dried Fruits",
   },
   {
     id: 4,
-    name: 'T-shirt',
-    price: 25,
-    category: 'Fashion',
-    image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=500&q=60',
+    name: "Crunchy crisps",
+    priceRange: "$50.00 - $90.00",
+    image: "/assets/images/products/product-image-4-1.jpg",
+    category: "Snacks",
   },
   {
     id: 5,
-    name: 'Sunglasses',
-    price: 45,
-    category: 'Accessories',
-    image: 'https://images.unsplash.com/photo-1581291519195-ef11498d1cf5?auto=format&fit=crop&w=500&q=60',
+    name: "Jewel cranberries",
+    priceRange: "$60.00 - $67.00",
+    image: "/assets/images/products/product-image-5-1.jpg",
+    category: "Dried Fruits",
   },
 ])
 
-const searchQuery = ref('')
-const selectedCategory = ref('')
-const showScrollTop = ref(false)
-
-const categories = computed(() =>
-  [...new Set(products.value.map(p => p.category))].sort()
-)
+const categories = computed(() => [...new Set(products.value.map(p => p.category))].sort())
 
 const filteredProducts = computed(() => {
   return products.value.filter(p => {
@@ -129,7 +132,6 @@ const filteredProducts = computed(() => {
 })
 
 function handleAddToCart(product) {
-  // You can integrate with your cart store here
   alert(`Added "${product.name}" to cart!`)
 }
 

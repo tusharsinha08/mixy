@@ -309,8 +309,11 @@
 </template>
 
 <script>
+import AppLayout from '@/Layouts/AppLayout.vue';
+
 export default {
   name: 'AboutUs',
+  layout: AppLayout,
   data() {
     return {
       email: ''

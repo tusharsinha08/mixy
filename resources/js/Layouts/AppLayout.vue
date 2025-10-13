@@ -1,18 +1,28 @@
 <template>
   <div>
-    <Navbar />
+    <Navbar :settings="settings" />
     <main>
       <slot /> <!-- Page content will render here -->
     </main>
+    <Footer :settings="settings" />
   </div>
 </template>
 
 <script>
 import Navbar from '@/Components/Navbar.vue'
+import Footer from '@/Components/Footer.vue'
 
 export default {
+  name: "AppLayout",
   components: {
-    Navbar
+    Navbar,
+    Footer
+  },
+  props: {
+    settings: {
+      type: Object,
+      default: () => ({})
+    }
   }
 }
 </script>
