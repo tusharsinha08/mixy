@@ -12,17 +12,17 @@ class HomeBannersSeeder extends Seeder
         $banners = [
             [
                 'position' => 'left',
-                'title' => 'Fresh Organic Kiwi',
-                'subtitle' => 'Healthy & Delicious',
-                'price' => '$10.00 - $70.00',
-                'image' => '/uploads/banners/kiwi.jpg',
+                'title' => 'Strawberry Velvet Cake',
+                'subtitle' => '100% Natural Organic',
+                'price' => '$70.00',
+                'image' => '/assets/images/banners/img1_banner3_mixy1.webp',
             ],
             [
                 'position' => 'right',
-                'title' => 'Dried Mango',
-                'subtitle' => 'Natural Sweetness',
-                'price' => '$8.00 - $30.00',
-                'image' => '/uploads/banners/mango.jpg',
+                'title' => 'Organic Nuts',
+                'subtitle' => '',
+                'price' => ' $30.00',
+                'image' => '/assets/images/banners/img2_banner3_mixy1.webp',
             ],
         ];
 

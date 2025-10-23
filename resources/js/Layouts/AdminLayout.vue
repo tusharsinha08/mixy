@@ -1,50 +1,38 @@
 <template>
-  <div class="flex h-screen bg-gray-100">
+  <div class="flex h-screen bg-gray-100 ">
     <!-- Sidebar -->
     <aside class="w-64 bg-white shadow-md hidden md:block">
       <div class="p-4 font-bold text-lg border-b">Admin Panel</div>
 
       <nav class="p-4 space-y-2">
 
-        <Link
-          href="/admin-dashboard"
-          class="block py-2 px-3 rounded hover:bg-gray-200"
-        >
-          Dashboard
+        <Link href="/admin/dashboard" class="block py-2 px-3 rounded hover:bg-gray-200">
+        Dashboard
         </Link>
-         <!-- 🏠 Home Link -->
-      <Link
-  href="/admin/home-settings"
-  class="block py-2 px-3 rounded hover:bg-gray-200"
->
-  Home Settings
-</Link>
+        <!-- 🏠 Home Link -->
+        <Link href="/admin/header-settings" class="block py-2 px-3 rounded hover:bg-gray-200">
+        Header Settings
+        </Link>
+        <Link href="/admin/home-settings" class="block py-2 px-3 rounded hover:bg-gray-200">
+        Home Settings
+        </Link>
 
-        <Link
-          href="/products"
-          class="block py-2 px-3 rounded hover:bg-gray-200"
-        >
-          Products
+        <Link href="/admin/products" class="block py-2 px-3 rounded hover:bg-gray-200">
+        Products
         </Link>
-        <Link
-          href="/orders"
-          class="block py-2 px-3 rounded hover:bg-gray-200"
-        >
-          Orders
+        <Link href="/admin/about-us" class="block py-2 px-3 rounded hover:bg-gray-200">
+        About Us
         </Link>
-        <Link
-          href="/users"
-          class="block py-2 px-3 rounded hover:bg-gray-200"
-        >
-          Users
+        <Link href="/admin/contact-us" class="block py-2 px-3 rounded hover:bg-gray-200">
+        Contact Us
         </Link>
       </nav>
     </aside>
 
     <!-- Main Content -->
-    <div class="flex-1 flex flex-col overflow-hidden">
+     <div class="flex-1 flex flex-col overflow-y-auto">
       <!-- Header -->
-      <header class="bg-white shadow-md p-4 flex justify-between items-center">
+      <header class="bg-white shadow-md p-4 flex justify-between items-center sticky top-0 z-10">
         <h1 class="font-semibold text-lg">Admin Dashboard</h1>
         <div class="flex items-center space-x-4">
           <span class="text-sm text-gray-600">Hello, Admin</span>
@@ -52,9 +40,11 @@
       </header>
 
       <!-- Page Content -->
-      <main class="flex-1 overflow-y-auto p-6">
+      <main class="py-6">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <slot />
-      </main>
+      </div>
+    </main>
     </div>
   </div>
 </template>

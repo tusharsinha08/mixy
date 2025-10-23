@@ -1,15 +1,16 @@
 <template>
   <div
+    @click="goToProduct(product.id)"
     class="border rounded-xl p-2 hover:shadow-md transition relative flex flex-col items-center text-center"
   >
     <!-- Make the whole card clickable except the button -->
     <Link
-      :href="`/product-details/${product.id}`"
+      :href="`/product-details/${product.id}`" 
       class="flex flex-col items-center text-center w-full cursor-pointer"
     >
       <!-- Product Image -->
       <img
-        :src="product.image"
+        :src="product.image_primary"
         :alt="product.name"
         class="object-contain mb-3 w-32 h-32"
       />
@@ -27,7 +28,7 @@
 
       <!-- Product Price -->
       <p class="text-red-600 font-semibold text-sm">
-        {{ product.priceRange || ('$' + product.price) }}
+        {{ product.priceRange || ( product.price_range) }}
       </p>
     </Link>
 

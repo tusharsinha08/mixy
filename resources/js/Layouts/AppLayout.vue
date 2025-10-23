@@ -1,10 +1,10 @@
 <template>
   <div>
-    <Navbar :settings="settings" />
+    <Navbar :settings="$page.props.headerSettings" />
     <main>
       <slot /> <!-- Page content will render here -->
     </main>
-    <Footer :settings="settings" />
+    <Footer :settings="headerSettings" />
   </div>
 </template>
 

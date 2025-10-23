@@ -19,15 +19,15 @@ createInertiaApp({
     const pages = import.meta.glob('./Pages/**/*.vue');
     const page = resolvePageComponent(`./Pages/${name}.vue`, pages);
 
-    page.then((module) => {
-      // ✅ If the page is inside "Admin/", use AdminLayout
-      if (name.startsWith('Admin/')) {
-        module.default.layout = module.default.layout || AdminLayout;
-      } else {
-        // ✅ Otherwise, use AppLayout
-        module.default.layout = module.default.layout || AppLayout;
-      }
-    });
+    // page.then((module) => {
+    //   // ✅ If the page is inside "Admin/", use AdminLayout
+    //   if (name.startsWith('Admin/')) {
+    //     module.default.layout = module.default.layout || AdminLayout;
+    //   } else {
+    //     // ✅ Otherwise, use AppLayout
+    //     module.default.layout = module.default.layout || AppLayout;
+    //   }
+    // });
 
     return page;
   },

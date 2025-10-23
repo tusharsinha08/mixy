@@ -18,8 +18,11 @@ class DatabaseSeeder extends Seeder
             HomeSettingsSeeder::class,
             HomeBestSellerSeeder::class,
             HomeDealSeeder::class,
+            HomeCardSeeder::class,
             HomeBannersSeeder::class,
             HomeCategorySeeder::class,
+            HomeNewArrivalSeeder::class,
+            ProductSeeder::class,
         ]);
 
         // Create or update the test user safely

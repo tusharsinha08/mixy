@@ -32,7 +32,10 @@ class HomeSettingsSeeder extends Seeder
                         'image' => '/assets/images/banners/img1_banner1_mixy2.webp',
                     ],
                 ]),
-
+                 'featured_category' => json_encode([
+                    'image' => '/assets/images/banners/img_banner4_mixy1.webp'
+                ]),
+          
 
                 'newsletter' => json_encode([
                     'title' => 'Sign up to Newsletter',

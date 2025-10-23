@@ -12,24 +12,24 @@ class HomeCategorySeeder extends Seeder
 
         HomeCategory::insert([
             [
-                'name' => 'Fresh Vegetables',
-                'image' => '/assets/images/categories/vegetables.jpg',
-                'products' => 20,
-            ],
-            [
-                'name' => 'Fresh Fruits',
-                'image' => '/assets/images/categories/fruits.jpg',
-                'products' => 25,
-            ],
-            [
                 'name' => 'Dried Fruits',
-                'image' => '/assets/images/categories/dried-fruits.jpg',
-                'products' => 15,
+                'image' => '/assets/images/categories/fresh_vegetables.webp',
+                'products' => 1,
             ],
             [
-                'name' => 'Organic Juices',
-                'image' => '/assets/images/categories/juices.jpg',
-                'products' => 10,
+                'name' => 'Fruits',
+                'image' => '/assets/images/categories/fresh_fruits.webp',
+                'products' => 1,
+            ],
+            [
+                'name' => 'Juices',
+                'image' => '/assets/images/categories/fresh_fruits.webp',
+                'products' => 1,
+            ],
+            [
+                'name' => 'Nuts',
+                'image' => '/assets/images/categories/fresh_fruits.webp',
+                'products' => 2,
             ],
         ]);
     }

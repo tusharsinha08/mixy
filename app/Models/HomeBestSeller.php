@@ -10,17 +10,15 @@ class HomeBestSeller extends Model
     use HasFactory;
 
     protected $fillable = [
-        'home_setting_id',
-        'name',
-        'price_range',
-        'image',
-        'rating',
-        'button_text',
-        'button_icon',
+        'product_id',
+        'bs_title',
+        'bs_subtitle',
+        'status',
     ];
 
-    public function homeSetting()
+    // ✅ Relation to Product
+    public function product()
     {
-        return $this->belongsTo(HomeSetting::class);
+        return $this->belongsTo(Product::class, 'product_id');
     }
 }

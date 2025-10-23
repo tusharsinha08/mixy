@@ -10,6 +10,11 @@ class HomeCard extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'price', 'image', 'button_text', 'button_icon', 'button_url'
+        'title',
+        'price',
+        'image',
+        'button_text',
+        'button_icon',
+        'button_url'
     ];
 }

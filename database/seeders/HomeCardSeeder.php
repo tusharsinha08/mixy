@@ -15,7 +15,7 @@ class HomeCardSeeder extends Seeder
             [
                 'title' => 'Fresh Fruit Kiwis',
                 'price' => '$10 - $40',
-                'image' => '/assets/images/cards/card-1.jpg',
+                'image' => '/assets/images/banners/img1_banner2_mixy1.webp',
                 'button_text' => 'Shop Now',
                 'button_icon' => 'fas fa-arrow-right',
                 'button_url' => '#',
@@ -23,7 +23,7 @@ class HomeCardSeeder extends Seeder
             [
                 'title' => 'Organic Dried Mango',
                 'price' => '$15 - $50',
-                'image' => '/assets/images/cards/card-2.jpg',
+                'image' => '/assets/images/banners/img2_banner2_mixy1.webp',
                 'button_text' => 'Shop Now',
                 'button_icon' => 'fas fa-arrow-right',
                 'button_url' => '#',
@@ -31,7 +31,7 @@ class HomeCardSeeder extends Seeder
             [
                 'title' => 'Crunchy Crisps',
                 'price' => '$20 - $60',
-                'image' => '/assets/images/cards/card-3.jpg',
+                'image' => '/assets/images/banners/img3_banner2_mixy1.webp',
                 'button_text' => 'Shop Now',
                 'button_icon' => 'fas fa-arrow-right',
                 'button_url' => '#',

@@ -9,12 +9,11 @@ class HomeNewArrival extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'price_range',
-        'image',
-        'rating',
-        'button_text',
-        'button_icon',
-    ];
+    protected $fillable = ['product_id' , 'title', 'subtitle'];
+
+   
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

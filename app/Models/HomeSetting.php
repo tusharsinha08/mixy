@@ -21,20 +21,23 @@ class HomeSetting extends Model
         'nav_links',
         'offer_banners',
         'categories',
-        'featured_category',
         'newsletter',
         'footer',
         'icons',
+        'services',
+       
+ 
     ];
 
     protected $casts = [
         'nav_links' => 'array',
         'offer_banners' => 'array',
         'categories' => 'array',
-        'featured_category' => 'array',
+        'natural_banners' => 'array',
         'newsletter' => 'array',
         'footer' => 'array',
         'icons' => 'array',
+        'services' => 'array',
     ];
     public function bestSellers()
 {

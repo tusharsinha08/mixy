@@ -9,13 +9,13 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <!-- Left: Images -->
       <div>
-        <img :src="product.imagePrimary" alt="" class="w-full h-64 sm:h-80 md:h-96 object-contain mb-4 rounded-lg" />
+        <img :src="product.image_primary" alt="" class="w-full h-64 sm:h-80 md:h-96 object-contain mb-4 rounded-lg" />
 
         <!-- Thumbnails -->
         <div class="flex space-x-2 overflow-x-auto">
-          <img v-for="(img, index) in product.thumbnails" :key="index" :src="img" alt=""
+          <img v-for="(img, index) in parsedThumbnails" :key="index" :src="img" alt=""
             class="w-16 h-16 sm:w-20 sm:h-20 object-contain border rounded cursor-pointer hover:border-green-600 flex-shrink-0"
-            @click="product.imagePrimary = img" />
+            @click="product.image_primary = img" />
         </div>
       </div>
 
@@ -27,20 +27,21 @@
         <div class="flex items-center space-x-1 text-yellow-400 mb-2 text-sm sm:text-base">
           <i v-for="n in product.rating" :key="n" class="fas fa-star"></i>
           <i v-for="n in 5 - product.rating" :key="'empty' + n" class="far fa-star"></i>
-          <span class="text-gray-500 ml-2 text-xs sm:text-sm">({{ product.reviews.length }} customer review)</span>
+          <span class="text-gray-500 ml-2 text-xs sm:text-sm">({{ product.rating || 0 }} customer
+            review)</span>
         </div>
 
-        <p class="text-gray-600 mb-4 text-sm sm:text-base">{{ product.descriptionShort }}</p>
+        <p class="text-gray-600 mb-4 text-sm sm:text-base">{{ product.description_short }}</p>
 
         <!-- Price -->
         <p class="text-lg sm:text-xl text-red-600 font-bold mb-4">
-          {{ product.priceRange }}
+          {{ product.price_range }}
         </p>
 
         <!-- Sizes -->
         <div class="flex flex-wrap items-center gap-2 mb-4">
           <span class="font-semibold text-sm sm:text-base">Size:</span>
-          <button v-for="(size, index) in product.sizes" :key="index"
+          <button v-for="(size, index) in parsedSizes" :key="index"
             class="border px-2 py-1 rounded hover:border-green-600 text-sm sm:text-base">
             {{ size }}
           </button>
@@ -67,10 +68,12 @@
 
         <!-- Categories & Tags -->
         <p class="text-sm sm:text-base text-gray-500">
-          <span class="font-semibold">Categories:</span> {{ product.categories.join(', ') }}
+          <span class="font-semibold">Categories:</span>
+          {{ parsedCategories.length ? parsedCategories.join(', ') : '-' }}
         </p>
         <p class="text-sm sm:text-base text-gray-500">
-          <span class="font-semibold">Tags:</span> {{ product.tags.join(', ') }}
+          <span class="font-semibold">Tags:</span>
+          {{ parsedTags.length ? parsedTags.join(', ') : '-' }}
         </p>
 
         <!-- Social Share -->
@@ -95,19 +98,18 @@
         </div>
 
         <div v-if="activeTab === 'Description'" class="text-gray-700 text-sm sm:text-base">
-          {{ product.descriptionLong }}
+          {{ product.description_long }}
         </div>
         <div v-else-if="activeTab === 'Additional Information'" class="text-gray-700 text-sm sm:text-base">
-          <p>Size : {{ product.additionalInfo.size }}</p>
-          <p>Brand : {{ product.additionalInfo.brand }}</p>
-          <p>Dietary & Lifestyle : {{ product.additionalInfo.dietary_and_lifestyle }}</p>
+          <p>Size : {{ parsedAdditionalInfo?.size || '-' }}</p>
+          <p>Brand : {{ parsedAdditionalInfo?.brand || '-' }}</p>
+          <p>Dietary & Lifestyle : {{ parsedAdditionalInfo?.dietary_and_lifestyle || '-' }}</p>
         </div>
         <div v-else-if="activeTab === 'Reviews'" class="text-gray-700 text-sm sm:text-base space-y-4">
-          <div v-for="(review, index) in product.reviews" :key="index" class="mb-4 border-b pb-2">
-            <p class="font-semibold">{{ review.name }} - <span class="text-yellow-400">{{ '★'.repeat(review.rating)
-                }}</span></p>
-            <p class="text-gray-500 text-xs sm:text-sm">{{ review.date }}</p>
-            <p>{{ review.comment }}</p>
+          <div v-for="(review, index) in parsedReviews" :key="index" class="mb-4 border-b pb-2">
+            <p class="font-semibold">{{ review.name }} - <span class="text-yellow-400">{{ '★'.repeat(review.rating || 5) }}</span></p>
+            <p class="text-gray-500 text-xs sm:text-sm">{{ review.date || 'Recently' }}</p>
+            <p>{{ review.text || review.comment }}</p>
           </div>
 
           <!-- Add Review Form -->
@@ -130,19 +132,9 @@
     <div class="mt-8">
       <h2 class="text-xl sm:text-2xl font-bold mb-4">Related Products</h2>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-        <div v-for="item in product.relatedProducts" :key="item.id"
-          class="border rounded-xl p-4 hover:shadow-md transition flex flex-col items-center text-center">
-          <img :src="item.imagePrimary" alt="" class="w-full h-24 sm:h-28 md:h-28 object-contain mb-2" />
-          <h6 class="font-semibold text-gray-800 text-sm sm:text-base mb-1">{{ item.name }}</h6>
-          <div class="flex justify-center space-x-1 text-yellow-400 mb-1 text-xs sm:text-sm">
-            <i v-for="n in item.rating" :key="n" class="fas fa-star"></i>
-            <i v-for="n in 5 - item.rating" :key="'empty' + n" class="far fa-star"></i>
-          </div>
-          <p class="text-red-600 font-semibold text-sm sm:text-base">{{ item.priceRange }}</p>
-          <button @click="addToCart(item)"
-            class="mt-2 bg-green-600 w-8 h-8 sm:w-8 sm:h-8 text-white rounded-full flex items-center justify-center hover:bg-green-700 transition">
-            <i class="fas fa-shopping-bag text-sm sm:text-sm"></i>
-          </button>
+        <!-- Note: You'll need to fetch related products from your backend -->
+        <div class="border rounded-xl p-4 hover:shadow-md transition flex flex-col items-center text-center">
+          <p class="text-gray-500">Related products feature coming soon</p>
         </div>
       </div>
     </div>
@@ -150,52 +142,88 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-
+import AppLayout from '@/Layouts/AppLayout.vue'
+import { ref, computed } from 'vue'
 
 defineOptions({
-  layout: AdminLayout,
+  layout: AppLayout,
 })
 
-const product = ref({
-  id: 1,
-  name: 'Single product One',
-  imagePrimary: '/assets/images/products/product-image-2-1.jpg',
-  thumbnails: [
-    '/assets/images/products/product-image-2-1.jpg',
-    '/assets/images/products/product-image-2-2.jpg',
-    '/assets/images/products/product-image-2-3.jpg'
-  ],
-  rating: 4,
-  priceRange: '$10.00 - $20.00',
-  descriptionShort: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  descriptionLong: 'Full product description goes here. Include all details about the product.',
-  additionalInfo: {
-    size: '1kg, 200g, 500g',
-    brand: 'Skinfood',
-    dietary_and_lifestyle : 'Vegan'
-  },
-  reviews: [
-    { name: 'Mike B', rating: 5, comment: 'Excellent product!', date: 'Nov 10, 2022' },
-    { name: 'Alice W', rating: 4, comment: 'Good quality.', date: 'Nov 12, 2022' }
-  ],
-  categories: ['Fruits', 'Snacks'],
-  tags: ['Organic', 'Healthy'],
-  sizes: ['S', 'M', 'L'],
-  relatedProducts: [
-    { id: 2, name: 'Dried mango', imagePrimary: '/assets/images/products/product-image-1-1.jpg', rating: 4, priceRange: '$10.00 - $70.00' },
-    { id: 3, name: 'Banana chips', imagePrimary: '/assets/images/products/product-image-3-1.jpg', rating: 4, priceRange: '$15.00 - $50.00' },
-    { id: 4, name: 'Red Dates', imagePrimary: '/assets/images/products/product-image-4-1.jpg', rating: 4, priceRange: '$20.00 - $60.00' },
-    { id: 5, name: 'Cranberries', imagePrimary: '/assets/images/products/product-image-5-1.jpg', rating: 4, priceRange: '$25.00 - $70.00' },
-    { id: 6, name: 'Kiwi', imagePrimary: '/assets/images/products/product-image-6-1.jpg', rating: 4, priceRange: '$30.00 - $80.00' },
-  ]
+const props = defineProps({
+  product: Object,
 })
 
+// Create reactive product copy
+const product = ref({ ...props.product })
+
+console.log("Full product data:", props.product)
+
+// Parse JSON data with error handling
+const parsedThumbnails = computed(() => {
+  try {
+    if (Array.isArray(product.value.thumbnails)) return product.value.thumbnails
+    return product.value.thumbnails ? JSON.parse(product.value.thumbnails) : []
+  } catch {
+    return []
+  }
+})
+
+const parsedSizes = computed(() => {
+  try {
+    if (Array.isArray(product.value.sizes)) return product.value.sizes
+    return product.value.sizes ? JSON.parse(product.value.sizes) : []
+  } catch {
+    return []
+  }
+})
+
+const parsedCategories = computed(() => {
+  try {
+    if (Array.isArray(product.value.categories)) return product.value.categories
+    return product.value.categories ? JSON.parse(product.value.categories) : []
+  } catch {
+    return []
+  }
+})
+
+const parsedTags = computed(() => {
+  try {
+    if (Array.isArray(product.value.tags)) return product.value.tags
+    return product.value.tags ? JSON.parse(product.value.tags) : []
+  } catch {
+    return []
+  }
+})
+
+const parsedAdditionalInfo = computed(() => {
+  try {
+    if (typeof product.value.additional_info === 'object') return product.value.additional_info
+    return product.value.additional_info ? JSON.parse(product.value.additional_info) : {}
+  } catch {
+    return {}
+  }
+})
+
+const parsedReviews = computed(() => {
+  try {
+    if (Array.isArray(product.value.reviews)) return product.value.reviews
+    return product.value.reviews ? JSON.parse(product.value.reviews) : []
+  } catch {
+    return []
+  }
+})
+
+// Tabs and quantity
 const quantity = ref(1)
 const tabs = ['Description', 'Additional Information', 'Reviews']
 const activeTab = ref('Description')
 
+// Quantity handlers
 function increaseQty() { quantity.value++ }
 function decreaseQty() { if (quantity.value > 1) quantity.value-- }
-function addToCart(item) { console.log('Add to cart:', item) }
+
+// Add to cart
+function addToCart(item) {
+  console.log('Add to cart:', item)
+}
 </script>
